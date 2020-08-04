@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+//apply plugin: 'kotlin-kapt'
+//apply plugin: 'dagger.hilt.android.plugin'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -72,6 +75,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$archComponent"
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$archComponent"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$archComponent"
+
+    //Hilt dependencies
+//    implementation "com.google.dagger:hilt-android:2.28-alpha"
+//    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
