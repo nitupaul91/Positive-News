@@ -14,7 +14,7 @@ class NewsRepository @Inject constructor(private val newsClient: NewsClient) {
 
     private fun mapApiResponseToNews(overview: NewsOverview): Single<List<News>> {
         val newsList = mutableListOf<News>()
-        overview.newsData.children.forEach { child ->
+        overview.newsData?.children?.forEach { child ->
             newsList.add(
                 News(
                     child.data.title,

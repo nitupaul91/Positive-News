@@ -6,11 +6,9 @@ import javax.inject.Inject
 
 const val URL = "https://www.reddit.com/"
 
-class NewsClient @Inject constructor() {
-
-    private val newsRestInterface: NewsRestInterface =
-        RetrofitFactory.getRetrofitInstance(URL).create(NewsRestInterface::class.java)
-
+class NewsClient @Inject constructor(
+    private val newsRestInterface: NewsRestInterface
+) {
     fun getPositiveNews(): Single<NewsOverview> {
         return newsRestInterface.getPositiveNews()
     }
