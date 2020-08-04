@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/newsListFragment"
-        android:name="com.codingbatch.positivenews.NewsListFragment"
+        android:name="com.codingbatch.positivenews.ui.newslist.NewsListFragment"
         android:label="NewsListFragment" />
 
 </navigation>
