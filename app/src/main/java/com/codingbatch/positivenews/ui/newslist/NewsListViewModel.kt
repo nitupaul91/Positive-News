@@ -20,6 +20,11 @@ class NewsListViewModel @ViewModelInject constructor(
         getPositiveNews()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
+    }
+
     private fun getPositiveNews() {
         disposable.add(
             newsRepository.getPositiveNews()
