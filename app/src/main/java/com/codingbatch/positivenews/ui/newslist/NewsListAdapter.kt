@@ -7,8 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.databinding.ItemListNewsBinding
 import com.codingbatch.positivenews.model.News
+import javax.inject.Inject
 
-class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
+class NewsListAdapter @Inject constructor() : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
     var newsList: MutableList<News>? = mutableListOf()
         set(value) {
