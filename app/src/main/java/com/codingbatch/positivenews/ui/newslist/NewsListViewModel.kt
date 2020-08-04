@@ -14,7 +14,7 @@ class NewsListViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val newsList = MutableLiveData<List<News>>()
-    val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
     init {
         getPositiveNews()
@@ -28,7 +28,7 @@ class NewsListViewModel @ViewModelInject constructor(
                 .subscribe({ news ->
                     newsList.value = news
                 }, { throwable ->
-
+                    throwable.printStackTrace()
                 })
         )
     }
