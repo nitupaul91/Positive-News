@@ -20,5 +20,5 @@ class ChildrenData(
     @SerializedName("url")
     val url: String,
     @SerializedName("over_18")
-    val nsfw: Boolean
+    val NSFW: Boolean
 )
