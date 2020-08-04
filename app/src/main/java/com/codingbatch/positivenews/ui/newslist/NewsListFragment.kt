@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.R
@@ -14,10 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NewsListFragment : Fragment() {
+class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
 
     private val newsListViewModel: NewsListViewModel by viewModels()
-    @Inject
+
     lateinit var newsListAdapter: NewsListAdapter
 
     override fun onCreateView(
@@ -26,6 +27,8 @@ class NewsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_news_list, container, false)
+
+        newsListAdapter = NewsListAdapter(this)
 
         setupDataBinding(view)
         return view
@@ -46,5 +49,14 @@ class NewsListFragment : Fragment() {
             adapter = newsListAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }
+    }
+
+    override fun onNewsClicked() {
+        navigateToWebFragment()
+    }
+
+    private fun navigateToWebFragment() {
+        Navigation.findNavController(requireView())
+            .navigate(R.id.action_newsListFragment_to_webFragment)
     }
 }

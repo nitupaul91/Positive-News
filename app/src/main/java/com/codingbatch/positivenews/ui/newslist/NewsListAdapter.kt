@@ -7,9 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.databinding.ItemListNewsBinding
 import com.codingbatch.positivenews.model.News
-import javax.inject.Inject
 
-class NewsListAdapter @Inject constructor() : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
+class NewsListAdapter(private val newsClickListener: NewsClickListener) :
+    RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
     var newsList: MutableList<News>? = mutableListOf()
         set(value) {
@@ -27,14 +27,21 @@ class NewsListAdapter @Inject constructor() : RecyclerView.Adapter<NewsListAdapt
     override fun getItemCount() = newsList?.size ?: 0
 
     override fun onBindViewHolder(holder: NewsListAdapter.ViewHolder, position: Int) {
-        holder.bindView(newsList!!.get(position))
+        holder.bindView(newsList!!.get(position), newsClickListener)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindView(news: News) {
+        fun bindView(news: News, newsClickListener: NewsClickListener) {
+            itemView.setOnClickListener {
+                newsClickListener.onNewsClicked()
+            }
             val binding: ItemListNewsBinding = DataBindingUtil.getBinding(itemView)!!
             binding.news = news
         }
+    }
+
+    interface NewsClickListener {
+        fun onNewsClicked()
     }
 }
