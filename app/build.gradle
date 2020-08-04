@@ -97,6 +97,8 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
     kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
 
+    testImplementation "org.mockito:mockito-all:1.10.19"
+    androidTestImplementation "org.mockito:mockito-core:2.19.0"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

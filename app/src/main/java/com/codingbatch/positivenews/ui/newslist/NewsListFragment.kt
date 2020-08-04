@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.databinding.FragmentNewsListBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewsListFragment : Fragment() {
 
     private val newsListViewModel: NewsListViewModel by viewModels()
-    private lateinit var newsListAdapter: NewsListAdapter
+    @Inject
+    lateinit var newsListAdapter: NewsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,7 +26,6 @@ class NewsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_news_list, container, false)
-        newsListAdapter = NewsListAdapter()
 
         setupDataBinding(view)
         return view
