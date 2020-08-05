@@ -11,6 +11,7 @@ data class News(
     val NSFW: Boolean,
     val likes: Int,
     val domain: String,
+    val timeSincePosted: String,
     var isBookmarked: Boolean = false,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
