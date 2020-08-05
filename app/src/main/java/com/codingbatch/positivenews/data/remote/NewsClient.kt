@@ -4,8 +4,6 @@ import com.codingbatch.positivenews.data.remote.response.NewsOverview
 import io.reactivex.Single
 import javax.inject.Inject
 
-const val URL = "https://www.reddit.com/"
-
 class NewsClient @Inject constructor(
     private val newsRestInterface: NewsRestInterface
 ) {

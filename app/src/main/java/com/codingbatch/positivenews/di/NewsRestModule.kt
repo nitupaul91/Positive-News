@@ -2,7 +2,7 @@ package com.codingbatch.positivenews.di
 
 import com.codingbatch.positivenews.data.remote.NewsRestInterface
 import com.codingbatch.positivenews.data.remote.RetrofitFactory
-import com.codingbatch.positivenews.data.remote.URL
+import com.codingbatch.positivenews.util.Constants.URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
