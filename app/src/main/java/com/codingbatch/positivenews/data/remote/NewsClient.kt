@@ -7,7 +7,11 @@ import javax.inject.Inject
 class NewsClient @Inject constructor(
     private val newsRestInterface: NewsRestInterface
 ) {
-    fun getPositiveNews(): Single<NewsOverview> {
-        return newsRestInterface.getPositiveNews()
+    fun getNews(): Single<NewsOverview> {
+        return newsRestInterface.getNews()
+    }
+
+    fun getNewsAfter(name: String): Single<NewsOverview> {
+        return newsRestInterface.getNewsAfter(name)
     }
 }

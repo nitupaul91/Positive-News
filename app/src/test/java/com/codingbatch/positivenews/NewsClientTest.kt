@@ -3,7 +3,6 @@ package com.codingbatch.positivenews
 import com.codingbatch.positivenews.data.remote.NewsClient
 import com.codingbatch.positivenews.data.remote.NewsRestInterface
 import com.codingbatch.positivenews.data.remote.response.NewsOverview
-import com.codingbatch.positivenews.model.News
 import io.reactivex.Single
 import org.junit.Test
 
@@ -34,10 +33,10 @@ class NewsClientTest {
     @Test
     fun fetch_news_success() {
         val dummyPositiveNewsSingle = Single.just(newsOverview)
-        `when`(newsClient.getPositiveNews()).thenReturn(dummyPositiveNewsSingle)
+        `when`(newsClient.getNews()).thenReturn(dummyPositiveNewsSingle)
 
-        val resultPositiveNewsSingle = newsClient.getPositiveNews()
-        Mockito.verify(newsRestInterface).getPositiveNews()
+        val resultPositiveNewsSingle = newsClient.getNews()
+        Mockito.verify(newsRestInterface).getNews()
         assertEquals(dummyPositiveNewsSingle, resultPositiveNewsSingle)
     }
 }
