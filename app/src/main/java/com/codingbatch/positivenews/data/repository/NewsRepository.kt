@@ -21,7 +21,8 @@ class NewsRepository @Inject constructor(private val newsClient: NewsClient) {
                     child.data.url,
                     child.data.thumbnail,
                     child.data.NSFW,
-                    child.data.ups
+                    child.data.ups,
+                    child.data.domain
                 )
             )
         }

@@ -5,5 +5,6 @@ data class News(
     val url: String,
     val thumbnail: String,
     val NSFW: Boolean,
-    val likes: Int
+    val likes: Int,
+    val domain: String
 )
