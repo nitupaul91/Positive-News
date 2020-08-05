@@ -34,7 +34,7 @@ class NewsListAdapter(private val newsClickListener: NewsClickListener) :
 
         fun bindView(news: News, newsClickListener: NewsClickListener) {
             itemView.setOnClickListener {
-                newsClickListener.onNewsClicked()
+                newsClickListener.onNewsClicked(news)
             }
             val binding: ItemListNewsBinding = DataBindingUtil.getBinding(itemView)!!
             binding.news = news
@@ -42,6 +42,6 @@ class NewsListAdapter(private val newsClickListener: NewsClickListener) :
     }
 
     interface NewsClickListener {
-        fun onNewsClicked()
+        fun onNewsClicked(news: News)
     }
 }

@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.databinding.FragmentNewsListBinding
+import com.codingbatch.positivenews.model.News
+import com.codingbatch.positivenews.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
@@ -51,12 +52,15 @@ class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
         }
     }
 
-    override fun onNewsClicked() {
-        navigateToWebFragment()
+    override fun onNewsClicked(news: News) {
+        navigateToWebFragment(news)
     }
 
-    private fun navigateToWebFragment() {
+    private fun navigateToWebFragment(news: News) {
+        val args = Bundle()
+        args.putString(Constants.NEWS_URL, news.url)
+        arguments = args
         Navigation.findNavController(requireView())
-            .navigate(R.id.action_newsListFragment_to_webFragment)
+            .navigate(R.id.action_newsListFragment_to_webFragment, args)
     }
 }
