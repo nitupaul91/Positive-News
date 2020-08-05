@@ -7,6 +7,15 @@
     <fragment
         android:id="@+id/newsListFragment"
         android:name="com.codingbatch.positivenews.ui.newslist.NewsListFragment"
-        android:label="NewsListFragment" />
+        android:label="NewsListFragment">
+        <action
+            android:id="@+id/action_newsListFragment_to_webFragment"
+            app:destination="@id/webFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/webFragment"
+        android:name="com.codingbatch.positivenews.ui.details.WebFragment"
+        android:label="WebFragment" />
 
 </navigation>
