@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.codingbatch.positivenews.model.News
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface NewsDao {
@@ -15,5 +16,5 @@ interface NewsDao {
     fun getFavoriteNews(): Flowable<List<News>>
 
     @Query("SELECT * FROM news WHERE :id = id")
-    fun getNewsById(id: Int): Flowable<News>
+    fun getNewsById(id: Int): Single<News>
 }

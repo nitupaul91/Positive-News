@@ -49,7 +49,7 @@ ext {
     gsonConverterVersion = '2.3.0'
     retrofitClientVersion = '2.5.0'
     retrofitAdapterRxJavaVersion = '2.3.0'
-    room_version = '2.2.5'
+    roomVersion = '2.2.5'
 }
 
 dependencies {
@@ -60,9 +60,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     //room dependencies
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version" 
-    implementation "androidx.room:room-rxjava2:$room_version"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
 
     //Navigation dependencies
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
