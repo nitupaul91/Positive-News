@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface NewsRestInterface {
 
-    @GET("/r/UpliftingNews/.json")
+    @GET("/r/UpliftingNews/.json?limit=100")
     fun getPositiveNews(): Single<NewsOverview>
 }
