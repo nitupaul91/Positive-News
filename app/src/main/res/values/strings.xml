@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Positive News</string>
+    <string name="news_database_name">news_database</string>
 </resources>
