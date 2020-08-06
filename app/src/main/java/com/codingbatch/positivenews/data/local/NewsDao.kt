@@ -1,6 +1,7 @@
 package com.codingbatch.positivenews.data.local
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.codingbatch.positivenews.model.News
 import io.reactivex.Flowable
@@ -17,4 +18,7 @@ interface NewsDao {
 
     @Query("SELECT * FROM news WHERE :id = id")
     fun getNewsById(id: Int): Single<News>
+
+    @Insert
+    fun saveNews(newsList: List<News>)
 }
