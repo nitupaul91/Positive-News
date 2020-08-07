@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Positive News</string>
     <string name="news_database_name">news_database</string>
+
+    //Bottom Navigation tab names
+    <string name="bottom_navigation_tab_hot">HOT</string>
+    <string name="bottom_navigation_tab_new">NEW</string>
+    <string name="bottom_navigation_tab_saved">SAVED</string>
+    <string name="bottom_navigation_tab_more">MORE</string>
+
 </resources>
