@@ -19,10 +19,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/thumbnailCardView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
             android:layout_marginTop="4dp"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -41,6 +41,7 @@
             android:id="@+id/tvUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
             android:text="@{news.domain}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/thumbnailCardView" />
@@ -51,19 +52,28 @@
             android:layout_height="0dp"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
+            android:fontFamily="@font/roboto_bold"
             android:maxLines="3"
             android:text="@{news.title}"
+            android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvUrl"
             app:layout_constraintEnd_toStartOf="@id/thumbnailCardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/thumbnailCardView" />
 
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_more_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thumbnailCardView" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:background="@color/light_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvUrl" />
