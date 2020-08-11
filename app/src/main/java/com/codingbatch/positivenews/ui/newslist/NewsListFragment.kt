@@ -14,6 +14,7 @@ import com.codingbatch.positivenews.databinding.FragmentNewsListBinding
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_news_list.*
 
 @AndroidEntryPoint
 class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
@@ -49,6 +50,18 @@ class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
         recyclerView.apply {
             adapter = newsListAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
+    }
+
+    private fun setupToolbar() {
+        toolbar.apply {
+            title = ""
+            setNavigationIcon(R.drawable.ic_search)
         }
     }
 
