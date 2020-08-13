@@ -1,4 +1,4 @@
-package com.codingbatch.positivenews.ui.details
+package com.codingbatch.positivenews.ui.webview
 
 import android.os.Bundle
 import android.view.LayoutInflater
