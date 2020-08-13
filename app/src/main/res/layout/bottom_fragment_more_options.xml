@@ -6,6 +6,10 @@
         <variable
             name="viewModel"
             type="com.codingbatch.positivenews.ui.moreoptions.MoreOptionsViewModel" />
+
+        <variable
+            name="news"
+            type="com.codingbatch.positivenews.model.News" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -47,6 +51,7 @@
             android:drawableStart="@drawable/ic_share"
             android:drawablePadding="12dp"
             android:fontFamily="@font/roboto_medium"
+            android:onClick="@{()-> viewModel.shareNews()}"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:text="@string/more_options_share_button"

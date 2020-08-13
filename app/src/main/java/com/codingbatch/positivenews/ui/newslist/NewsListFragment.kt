@@ -72,7 +72,8 @@ class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
     }
 
     override fun onMoreOptionsClicked(news: News) {
-        MoreOptionsBottomFragment.newInstance(news.isBookmarked).show(childFragmentManager,"mob")
+        MoreOptionsBottomFragment.newInstance(news)
+            .show(childFragmentManager, "mob")
     }
 
     private fun navigateToWebFragment(news: News) {

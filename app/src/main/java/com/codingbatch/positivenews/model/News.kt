@@ -1,8 +1,11 @@
 package com.codingbatch.positivenews.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "news")
 data class News(
     val title: String,
@@ -14,4 +17,4 @@ data class News(
     var isBookmarked: Boolean = false,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
-)
+) : Parcelable

@@ -9,6 +9,7 @@ class MoreOptionsViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val isNewsBookmarked = MutableLiveData<Boolean>()
+    val isNewsShared = MutableLiveData<Boolean>()
 
     fun setBookmarkStatus(bookmarkStatus: Boolean) {
         isNewsBookmarked.value = bookmarkStatus
@@ -17,5 +18,9 @@ class MoreOptionsViewModel @ViewModelInject constructor(
     fun onBookmarkClicked() {
         //TODO refactor and retrieve/change the status directly in the database
         isNewsBookmarked.value = !isNewsBookmarked.value!!
+    }
+
+    fun shareNews() {
+        isNewsShared.value = true
     }
 }
