@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/webFragment"
-        android:name="com.codingbatch.positivenews.ui.details.WebFragment"
+        android:name="com.codingbatch.positivenews.ui.webview.WebFragment"
         android:label="WebFragment" />
 
 </navigation>

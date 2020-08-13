@@ -13,7 +13,7 @@
     <item
         android:id="@+id/savedNewsFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_bookmark"
+        android:icon="@drawable/ic_bookmarked"
         android:title="@string/bottom_navigation_tab_saved" />
     <item
         android:id="@+id/moreFragment"
