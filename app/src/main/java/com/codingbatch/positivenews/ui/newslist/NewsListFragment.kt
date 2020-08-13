@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.databinding.FragmentNewsListBinding
 import com.codingbatch.positivenews.model.News
+import com.codingbatch.positivenews.ui.moreoptions.MoreOptionsBottomFragment
 import com.codingbatch.positivenews.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_news_list.*
@@ -65,8 +66,13 @@ class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
         }
     }
 
+
     override fun onNewsClicked(news: News) {
         navigateToWebFragment(news)
+    }
+
+    override fun onMoreOptionsClicked(news: News) {
+        MoreOptionsBottomFragment.newInstance(news.isBookmarked).show(childFragmentManager,"mob")
     }
 
     private fun navigateToWebFragment(news: News) {
