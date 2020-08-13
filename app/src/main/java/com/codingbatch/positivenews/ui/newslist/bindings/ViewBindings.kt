@@ -4,6 +4,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.newslist.NewsListAdapter
 
@@ -11,6 +12,9 @@ import com.codingbatch.positivenews.ui.newslist.NewsListAdapter
 class ViewBindings {
 
     companion object {
+
+        private const val DEFAULT = "default"
+
         @JvmStatic
         @BindingAdapter("android:news")
         fun setNewsList(recyclerView: RecyclerView, newsList: MutableList<News>?) {
@@ -21,10 +25,16 @@ class ViewBindings {
         @JvmStatic
         @BindingAdapter("android:thumbnail")
         fun setThumbnail(imageView: ImageView, url: String) {
+            setDefaultThumbnail(imageView, url)
             Glide.with(imageView.context)
                 .load(url)
                 .dontAnimate()
                 .into(imageView)
+        }
+
+        private fun setDefaultThumbnail(imageView: ImageView, url: String) {
+            if (url == DEFAULT)
+                imageView.setBackgroundResource(R.drawable.ic_news_placeholder)
         }
     }
 }
