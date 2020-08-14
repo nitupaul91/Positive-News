@@ -11,7 +11,10 @@ import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.util.setOnSafeClickListener
 import kotlinx.android.synthetic.main.item_regular_list_news.view.*
 
-class NewsListAdapter(private val newsClickListener: NewsClickListener) :
+class NewsListAdapter(
+    private val newsClickListener: NewsClickListener,
+    private val newsScrollListener: NewsScrollListener
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var newsList: MutableList<News>? = mutableListOf()
@@ -49,6 +52,11 @@ class NewsListAdapter(private val newsClickListener: NewsClickListener) :
                     newsClickListener
                 )
             }
+        if (position == newsList?.size?.minus(2)){
+            newsScrollListener.fetchMoreNews(newsList!![newsList!!.size-1].fullName!!)
+            notifyDataSetChanged()
+        }
+
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -58,9 +66,7 @@ class NewsListAdapter(private val newsClickListener: NewsClickListener) :
             ListItem.TYPE_REGULAR.viewType
     }
 
-    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    }
+    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     inner class RegularViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -79,6 +85,10 @@ class NewsListAdapter(private val newsClickListener: NewsClickListener) :
     interface NewsClickListener {
         fun onNewsClicked(news: News)
         fun onMoreOptionsClicked(news: News)
+    }
+
+    interface NewsScrollListener {
+        fun fetchMoreNews(after: String)
     }
 
     enum class ListItem(val viewType: Int) {

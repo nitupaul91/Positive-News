@@ -17,7 +17,7 @@ class NewsListViewModel @ViewModelInject constructor(
     private val disposable = CompositeDisposable()
 
     init {
-        getPositiveNews()
+        getTopNews()
     }
 
     override fun onCleared() {
@@ -25,9 +25,9 @@ class NewsListViewModel @ViewModelInject constructor(
         disposable.clear()
     }
 
-    private fun getPositiveNews() {
+    fun getTopNews(after: String? = null) {
         disposable.add(
-            newsRepository.getPositiveNews()
+            newsRepository.getTopNews()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({ news ->

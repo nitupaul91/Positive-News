@@ -1,6 +1,6 @@
 package com.codingbatch.positivenews.di
 
-import com.codingbatch.positivenews.data.remote.NewsRestInterface
+import com.codingbatch.positivenews.data.remote.NewsApi
 import com.codingbatch.positivenews.data.remote.RetrofitFactory
 import com.codingbatch.positivenews.util.Constants.URL
 import dagger.Module
@@ -13,9 +13,9 @@ import dagger.hilt.android.components.ApplicationComponent
 class NewsRestModule {
 
     @Provides
-    fun bindsNewsRestInterface(): NewsRestInterface {
+    fun bindsNewsRestInterface(): NewsApi {
         return RetrofitFactory.getRetrofitInstance(URL).create(
-            NewsRestInterface::
+            NewsApi::
             class.java
         )
     }

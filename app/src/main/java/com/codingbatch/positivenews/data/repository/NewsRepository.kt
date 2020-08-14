@@ -1,17 +1,23 @@
 package com.codingbatch.positivenews.data.repository
 
-import com.codingbatch.positivenews.data.remote.NewsClient
-import com.codingbatch.positivenews.data.remote.response.ChildrenData
+import com.codingbatch.positivenews.data.local.NewsDao
+import com.codingbatch.positivenews.data.remote.NewsApi
 import com.codingbatch.positivenews.data.remote.response.NewsOverview
 import com.codingbatch.positivenews.model.News
 import io.reactivex.Single
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class NewsRepository @Inject constructor(private val newsClient: NewsClient) {
+class NewsRepository @Inject constructor(
+    private val newsApi: NewsApi,
+    private val newsDao: NewsDao
+) {
 
-    fun getPositiveNews(): Single<List<News>> {
-        return newsClient.getPositiveNews().flatMap(this::mapApiResponseToNews)
+    fun getTopNews(): Single<List<News>> {
+        return newsApi.getTopNews()
+            .flatMap(this::mapApiResponseToNews)
+            .onErrorResumeNext {
+                getSavedNews()
+            }
     }
 
     private fun mapApiResponseToNews(overview: NewsOverview): Single<List<News>> {
@@ -24,10 +30,20 @@ class NewsRepository @Inject constructor(private val newsClient: NewsClient) {
                     child.data.thumbnail,
                     child.data.NSFW,
                     child.data.ups,
+                    child.data.fullName,
                     child.data.domain
                 )
             )
         }
+        saveNews(newsList)
         return Single.just(newsList)
+    }
+
+    private fun saveNews(newsList: List<News>) {
+        newsDao.saveNews(newsList)
+    }
+
+    private fun getSavedNews(): Single<List<News>> {
+        return newsDao.getAllNews()
     }
 }

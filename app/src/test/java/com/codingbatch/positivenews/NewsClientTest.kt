@@ -1,9 +1,7 @@
 package com.codingbatch.positivenews
 
-import com.codingbatch.positivenews.data.remote.NewsClient
-import com.codingbatch.positivenews.data.remote.NewsRestInterface
+import com.codingbatch.positivenews.data.remote.NewsApi
 import com.codingbatch.positivenews.data.remote.response.NewsOverview
-import com.codingbatch.positivenews.model.News
 import io.reactivex.Single
 import org.junit.Test
 
@@ -20,11 +18,8 @@ class NewsClientTest {
     @Mock
     lateinit var newsOverview: NewsOverview
 
-    @Mock
-    lateinit var newsRestInterface: NewsRestInterface
-
     @InjectMocks
-    lateinit var newsClient: NewsClient
+    lateinit var newsApi: NewsApi
 
     @Before
     fun setup() {
@@ -34,10 +29,10 @@ class NewsClientTest {
     @Test
     fun fetch_news_success() {
         val dummyPositiveNewsSingle = Single.just(newsOverview)
-        `when`(newsClient.getPositiveNews()).thenReturn(dummyPositiveNewsSingle)
+        `when`(newsApi.getTopNews()).thenReturn(dummyPositiveNewsSingle)
 
-        val resultPositiveNewsSingle = newsClient.getPositiveNews()
-        Mockito.verify(newsRestInterface).getPositiveNews()
+        val resultPositiveNewsSingle = newsApi.getTopNews()
+        Mockito.verify(newsApi).getTopNews()
         assertEquals(dummyPositiveNewsSingle, resultPositiveNewsSingle)
     }
 }

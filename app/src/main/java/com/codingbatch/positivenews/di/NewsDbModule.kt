@@ -23,6 +23,8 @@ class NewsDbModule {
             NewsDb::class.java,
             application.getString(R.string.news_database_name)
         )
+                //TODO add migrations
+            .fallbackToDestructiveMigration()
             .build()
     }
 

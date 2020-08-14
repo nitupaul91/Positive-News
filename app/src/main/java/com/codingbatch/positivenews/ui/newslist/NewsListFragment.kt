@@ -18,7 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_news_list.*
 
 @AndroidEntryPoint
-class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
+class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener,
+    NewsListAdapter.NewsScrollListener {
 
     private val newsListViewModel: NewsListViewModel by viewModels()
 
@@ -31,7 +32,7 @@ class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_news_list, container, false)
 
-        newsListAdapter = NewsListAdapter(this)
+        newsListAdapter = NewsListAdapter(this, this)
 
         setupDataBinding(view)
         return view
@@ -82,5 +83,9 @@ class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener {
         arguments = args
         Navigation.findNavController(requireView())
             .navigate(R.id.action_newsListFragment_to_webFragment, args)
+    }
+
+    override fun fetchMoreNews(after: String) {
+        newsListViewModel.getTopNews(after)
     }
 }

@@ -13,6 +13,7 @@ data class News(
     val thumbnail: String,
     val NSFW: Boolean,
     val likes: Int,
+    val fullName: String?,
     val domain: String,
     var isBookmarked: Boolean = false,
     @PrimaryKey(autoGenerate = true)
