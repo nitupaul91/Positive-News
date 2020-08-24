@@ -14,8 +14,10 @@ class NewsListViewModel @ViewModelInject constructor(
     private val newsRepository: NewsRepository
 ) : ViewModel() {
 
-    val newsList = MutableLiveData<List<News>>()
     private val disposable = CompositeDisposable()
+
+    val newsList = MutableLiveData<List<News>>()
+    val isLoading = MutableLiveData<Boolean>()
 
     init {
         newsList.value = mutableListOf()
@@ -28,10 +30,12 @@ class NewsListViewModel @ViewModelInject constructor(
     }
 
     fun getTopNews(after: String? = null) {
+        isLoading.value = true
         disposable.add(
             newsRepository.getTopNews(after)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .doAfterTerminate { isLoading.value = false }
                 .subscribe({ news ->
                     newsList.plusAssign(news)
                 }, { throwable ->

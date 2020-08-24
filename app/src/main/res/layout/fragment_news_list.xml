@@ -14,7 +14,8 @@
         android:background="@color/white">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animationView"
+            android:id="@+id/loadingAnimation"
+            android:loading="@{viewModel.isLoading()}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"

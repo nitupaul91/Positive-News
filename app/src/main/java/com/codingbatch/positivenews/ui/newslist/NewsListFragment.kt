@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.databinding.FragmentNewsListBinding
 import com.codingbatch.positivenews.model.News
@@ -24,7 +23,7 @@ class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener,
 
     private val newsListViewModel: NewsListViewModel by viewModels()
 
-    lateinit var newsListAdapter: NewsListAdapter
+    private lateinit var newsListAdapter: NewsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,7 +75,7 @@ class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener,
 
     override fun onMoreOptionsClicked(news: News) {
         MoreOptionsBottomFragment.newInstance(news)
-            .show(childFragmentManager, "mob")
+            .show(childFragmentManager, Constants.MORE_OPTIONS_TAG)
     }
 
     private fun navigateToWebFragment(news: News) {
