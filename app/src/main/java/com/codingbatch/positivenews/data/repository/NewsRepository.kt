@@ -12,8 +12,8 @@ class NewsRepository @Inject constructor(
     private val newsDao: NewsDao
 ) {
 
-    fun getTopNews(): Single<List<News>> {
-        return newsApi.getTopNews()
+    fun getTopNews(after: String?): Single<List<News>> {
+        return newsApi.getTopNews(after = after)
             .flatMap(this::mapApiResponseToNews)
             .onErrorResumeNext {
                 getSavedNews()

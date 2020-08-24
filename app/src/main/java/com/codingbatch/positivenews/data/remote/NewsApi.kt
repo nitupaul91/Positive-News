@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface NewsApi {
 
-    @GET("/r/UpliftingNews/.json?limit=20")
+    @GET("/r/UpliftingNews/hot.json?limit=20")
     fun getTopNews(
         @Query("after") after: String? = null,
         @Query("before") before: String? = null

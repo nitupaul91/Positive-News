@@ -48,15 +48,17 @@ class NewsListAdapter(
         if (holder is RegularViewHolder)
             when (getItemViewType(position)) {
                 ListItem.TYPE_REGULAR.viewType -> holder.bindView(
-                    newsList!!.get(position),
+                    newsList!![position],
                     newsClickListener
                 )
             }
-        if (position == newsList?.size?.minus(2)){
-            newsScrollListener.fetchMoreNews(newsList!![newsList!!.size-1].fullName!!)
-            notifyDataSetChanged()
+        if (position == newsList!!.size - 1) {
+            newsScrollListener.fetchMoreNews(newsList!![newsList!!.size - 1].fullName!!)
         }
+    }
 
+    override fun getItemId(position: Int): Long {
+        return newsList!![position].hashCode().toLong()
     }
 
     override fun getItemViewType(position: Int): Int {

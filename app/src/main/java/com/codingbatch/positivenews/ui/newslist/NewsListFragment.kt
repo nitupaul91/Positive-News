@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.databinding.FragmentNewsListBinding
 import com.codingbatch.positivenews.model.News
@@ -50,6 +51,7 @@ class NewsListFragment : Fragment(), NewsListAdapter.NewsClickListener,
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.apply {
+            adapter?.setHasStableIds(true)
             adapter = newsListAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }

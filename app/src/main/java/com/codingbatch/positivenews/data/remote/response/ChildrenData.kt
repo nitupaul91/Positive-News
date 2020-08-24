@@ -25,6 +25,6 @@ class ChildrenData(
     val domain: String,
     @SerializedName("created")
     val created: Long,
-    @SerializedName("author_fullname")
+    @SerializedName("name")
     val fullName: String?
 )
