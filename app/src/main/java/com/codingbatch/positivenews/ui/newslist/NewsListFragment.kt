@@ -3,7 +3,6 @@ package com.codingbatch.positivenews.ui.newslist
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.R
@@ -30,13 +29,11 @@ class NewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             binding.viewModel = newsListViewModel
-
-            setupRecyclerView(rvNewsList)
         }
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.apply {
+    private fun setupRecyclerView() {
+        rvNewsList.apply {
             adapter?.setHasStableIds(true)
             adapter = newsListAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -47,6 +44,7 @@ class NewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         newsListAdapter = NewsListAdapter(this, this)
+        setupRecyclerView()
     }
 
     private fun setupToolbar() {

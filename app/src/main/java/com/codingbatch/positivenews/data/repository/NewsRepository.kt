@@ -23,6 +23,10 @@ class NewsRepository @Inject constructor(
         return newsDao.saveNewsItem(news)
     }
 
+    fun getNewsById(newsId: String): Single<News> {
+        return newsDao.getNewsById(newsId)
+    }
+
     fun getTopNews(after: String?): Single<List<News>> {
         return newsApi.getTopNews(after = after)
             .flatMap(this::mapApiResponseToNews)
@@ -54,7 +58,7 @@ class NewsRepository @Inject constructor(
         newsDao.saveNews(newsList)
     }
 
-    private fun getSavedNews(): Single<List<News>> {
+    fun getSavedNews(): Single<List<News>> {
         return newsDao.getAllNews()
     }
 }

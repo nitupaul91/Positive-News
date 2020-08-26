@@ -2,23 +2,32 @@ package com.codingbatch.positivenews.ui.moreoptions
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.codingbatch.positivenews.data.repository.NewsRepository
 import com.codingbatch.positivenews.model.News
+import com.codingbatch.positivenews.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
 class MoreOptionsViewModel @ViewModelInject constructor(
     private val repository: NewsRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     val isNewsBookmarked = MutableLiveData<Boolean>()
     val isNewsShared = MutableLiveData<Boolean>()
 
-//    fun setBookmarkStatus(bookmarkStatus: Boolean) {
-//        isNewsBookmarked.value = bookmarkStatus
-//    }
+    fun setBookmarkStatus(newsId: String) {
+        disposable.add(
+            repository.getNewsById(newsId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ news ->
+                    isNewsBookmarked.value = news.isBookmarked
+                }, { t ->
+                    t.printStackTrace()
+                })
+        )
+    }
 
     fun onBookmarkClicked(news: News) {
         if (news.isBookmarked)
@@ -28,21 +37,29 @@ class MoreOptionsViewModel @ViewModelInject constructor(
     }
 
     private fun bookmarkNews(news: News) {
-        repository.bookmarkNews(news)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                isNewsBookmarked.value = true
-            }
+        disposable.add(
+            repository.bookmarkNews(news)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    isNewsBookmarked.value = true
+                }, { t ->
+                    t.printStackTrace()
+                })
+        )
     }
 
     private fun removeBookmark(news: News) {
-        repository.removeBookmark(news)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                isNewsBookmarked.value = false
-            }
+        disposable.add(
+            repository.removeBookmark(news)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    isNewsBookmarked.value = false
+                }, { t ->
+                    t.printStackTrace()
+                })
+        )
     }
 
     fun shareNews() {

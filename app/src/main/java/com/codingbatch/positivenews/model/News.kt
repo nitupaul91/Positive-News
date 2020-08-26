@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
+import java.util.*
 
 @Parcelize
 @Entity(tableName = "news")
@@ -16,6 +17,6 @@ data class News(
     val fullName: String?,
     val domain: String,
     var isBookmarked: Boolean = false,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0
+    @PrimaryKey
+    val id: String = UUID.randomUUID().toString()
 ) : Parcelable
