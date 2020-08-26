@@ -4,6 +4,7 @@ import com.codingbatch.positivenews.data.local.NewsDao
 import com.codingbatch.positivenews.data.remote.NewsApi
 import com.codingbatch.positivenews.data.remote.response.NewsOverview
 import com.codingbatch.positivenews.model.News
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -11,6 +12,16 @@ class NewsRepository @Inject constructor(
     private val newsApi: NewsApi,
     private val newsDao: NewsDao
 ) {
+
+    fun bookmarkNews(news: News): Completable {
+        news.isBookmarked = true
+        return newsDao.saveNewsItem(news)
+    }
+
+    fun removeBookmark(news: News): Completable {
+        news.isBookmarked = false
+        return newsDao.saveNewsItem(news)
+    }
 
     fun getTopNews(after: String?): Single<List<News>> {
         return newsApi.getTopNews(after = after)

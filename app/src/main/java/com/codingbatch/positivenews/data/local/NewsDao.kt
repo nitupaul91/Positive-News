@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.codingbatch.positivenews.model.News
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -22,4 +23,7 @@ interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveNews(newsList: List<News>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveNewsItem(news: News): Completable
 }

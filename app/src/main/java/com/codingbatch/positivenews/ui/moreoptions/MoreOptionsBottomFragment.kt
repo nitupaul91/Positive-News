@@ -39,7 +39,7 @@ class MoreOptionsBottomFragment : BottomSheetDialogFragment() {
             if (it)
                 shareNews(news)
         })
-        moreOptionsViewModel.setBookmarkStatus(news.isBookmarked)
+//        moreOptionsViewModel.setBookmarkStatus(news.isBookmarked)
     }
 
     private fun shareNews(news: News) {
