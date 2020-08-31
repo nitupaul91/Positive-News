@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.databinding.ItemRegularListNewsBinding
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.util.setOnSafeClickListener
@@ -15,44 +14,32 @@ class NewsListAdapter(
     private val newsClickListener: NewsClickListener,
     private val newsScrollListener: NewsScrollListener
 ) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
-    var newsList: MutableList<News>? = mutableListOf()
-        set(value) {
-            field?.clear()
-            field = value
-            notifyDataSetChanged()
-        }
+    private var newsList: MutableList<News>? = mutableListOf()
+
+    fun setNews(newsList: MutableList<News>?) {
+        this.newsList = newsList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): RecyclerView.ViewHolder {
+    ): NewsListAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemRegularListNewsBinding.inflate(inflater, parent, false)
 
-        return when (viewType) {
-            ListItem.TYPE_HEADER.viewType -> HeaderViewHolder(
-                inflater.inflate(R.layout.item_header_news_list, parent, false)
-            )
-            ListItem.TYPE_REGULAR.viewType -> RegularViewHolder(
-                binding.root
-            )
-            else -> throw java.lang.IllegalArgumentException("invalid viewType")
-        }
+        return ViewHolder(
+            binding.root
+        )
     }
 
     override fun getItemCount() = newsList?.size ?: 0
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is RegularViewHolder)
-            when (getItemViewType(position)) {
-                ListItem.TYPE_REGULAR.viewType -> holder.bindView(
-                    newsList!![position],
-                    newsClickListener
-                )
-            }
-        if (position == newsList!!.size - 1) {
+    override fun onBindViewHolder(holder: NewsListAdapter.ViewHolder, position: Int) {
+        holder.bindView(newsList!![position], newsClickListener)
+        if (newsList!!.size > 18 && position == newsList!!.size - 1) {
             newsScrollListener.fetchMoreNews(newsList!![newsList!!.size - 1].fullName!!)
         }
     }
@@ -61,16 +48,7 @@ class NewsListAdapter(
         return newsList!![position].hashCode().toLong()
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (position == 0)
-            ListItem.TYPE_HEADER.viewType
-        else
-            ListItem.TYPE_REGULAR.viewType
-    }
-
-    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    inner class RegularViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindView(news: News, newsClickListener: NewsClickListener) {
             itemView.rlNewsContainer.setOnSafeClickListener {
@@ -91,10 +69,5 @@ class NewsListAdapter(
 
     interface NewsScrollListener {
         fun fetchMoreNews(after: String)
-    }
-
-    enum class ListItem(val viewType: Int) {
-        TYPE_HEADER(0),
-        TYPE_REGULAR(1)
     }
 }

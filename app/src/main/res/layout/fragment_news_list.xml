@@ -15,10 +15,10 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loadingAnimation"
-            android:loading="@{viewModel.isLoading()}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:loading="@{viewModel.isLoading()}"
             app:lottie_autoPlay="true"
             app:lottie_fileName="loading_anim_two.json"
             app:lottie_loop="true" />
@@ -33,7 +33,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                app:layout_scrollFlags="scroll|enterAlways" />
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_search"
+                    android:imeOptions="actionSearch"
+                    android:text="@={viewModel.searchText}" />
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 

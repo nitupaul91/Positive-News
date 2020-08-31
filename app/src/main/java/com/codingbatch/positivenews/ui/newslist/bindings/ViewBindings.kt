@@ -21,7 +21,7 @@ class ViewBindings {
         @BindingAdapter("android:news")
         fun setNewsList(recyclerView: RecyclerView, newsList: MutableList<News>?) {
             val adapter = recyclerView.adapter as NewsListAdapter
-            adapter.newsList = newsList
+            adapter.setNews(newsList)
         }
 
         @JvmStatic
