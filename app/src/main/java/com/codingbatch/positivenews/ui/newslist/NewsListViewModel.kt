@@ -15,6 +15,7 @@ class NewsListViewModel @ViewModelInject constructor(
 
     val newsList = MutableLiveData<List<News>>()
     val isLoading = MutableLiveData<Boolean>()
+    val searchText = MutableLiveData<String>()
 
     init {
         newsList.value = mutableListOf()
@@ -34,6 +35,15 @@ class NewsListViewModel @ViewModelInject constructor(
                     throwable.printStackTrace()
                 })
         )
+    }
+
+    fun searchNews() {
+        val searchText = searchText.value ?: ""
+        if (searchText.isEmpty()) {
+//todo display snackbar empty search
+            return
+        }
+        newsList.value = newsRepository.searchNews(searchText)
     }
 
 }

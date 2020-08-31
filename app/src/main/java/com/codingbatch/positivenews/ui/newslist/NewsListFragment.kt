@@ -3,6 +3,7 @@ package com.codingbatch.positivenews.ui.newslist
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.R
@@ -42,16 +43,13 @@ class NewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupToolbar()
         newsListAdapter = NewsListAdapter(this, this)
         setupRecyclerView()
-    }
 
-    private fun setupToolbar() {
-        toolbar.apply {
-            title = ""
-            setNavigationIcon(R.drawable.ic_search)
-        }
+        newsListViewModel.searchText.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty())
+                newsListViewModel.searchNews()
+        })
     }
 
     override fun onNewsClicked(news: News) {

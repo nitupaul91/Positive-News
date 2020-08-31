@@ -13,6 +13,17 @@ class NewsRepository @Inject constructor(
     private val newsDao: NewsDao
 ) {
 
+    private var newsList: List<News> = listOf()
+
+    fun searchNews(searchText: String): List<News>? {
+        val news = mutableListOf<News>()
+        newsList.forEach { newsItem ->
+            if (newsItem.title.contains(searchText, true))
+                news.add(newsItem)
+        }
+        return news
+    }
+
     fun bookmarkNews(news: News): Completable {
         news.isBookmarked = true
         return newsDao.saveNewsItem(news)
@@ -27,7 +38,7 @@ class NewsRepository @Inject constructor(
         return newsDao.getNewsById(newsId)
     }
 
-    fun getTopNews(after: String?): Single<List<News>> {
+    fun getTopNews(after: String? = null): Single<List<News>> {
         return newsApi.getTopNews(after = after)
             .flatMap(this::mapApiResponseToNews)
             .onErrorResumeNext {
@@ -51,14 +62,19 @@ class NewsRepository @Inject constructor(
             )
         }
         saveNews(newsList)
+        cacheNews(newsList)
         return Single.just(newsList)
+    }
+
+    private fun cacheNews(newsList: List<News>) {
+        this.newsList = newsList
     }
 
     private fun saveNews(newsList: List<News>) {
         newsDao.saveNews(newsList)
     }
 
-    fun getSavedNews(): Single<List<News>> {
+    private fun getSavedNews(): Single<List<News>> {
         return newsDao.getAllNews()
     }
 }
