@@ -56,8 +56,12 @@
                     android:id="@+id/etSearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/white"
+                    android:textCursorDrawable="@null"
                     android:drawableStart="@drawable/ic_search"
                     android:imeOptions="actionSearch"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
                     android:text="@={viewModel.searchText}" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
