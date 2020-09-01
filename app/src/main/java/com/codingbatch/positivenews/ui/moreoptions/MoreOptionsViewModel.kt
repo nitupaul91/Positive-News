@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.codingbatch.positivenews.data.repository.NewsRepository
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.base.BaseViewModel
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 
 class MoreOptionsViewModel @ViewModelInject constructor(
@@ -15,6 +17,7 @@ class MoreOptionsViewModel @ViewModelInject constructor(
 
     val isNewsBookmarked = MutableLiveData<Boolean>()
     val isNewsShared = MutableLiveData<Boolean>()
+    val isDialogVisible = MutableLiveData<Boolean>()
 
     fun setBookmarkStatus(newsId: String) {
         disposable.add(
@@ -41,6 +44,13 @@ class MoreOptionsViewModel @ViewModelInject constructor(
             repository.bookmarkNews(news)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate {
+                    Completable.timer(800, TimeUnit.MILLISECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            isDialogVisible.value = false
+                        }
+                }
                 .subscribe({
                     isNewsBookmarked.value = true
                 }, { t ->
@@ -54,6 +64,13 @@ class MoreOptionsViewModel @ViewModelInject constructor(
             repository.removeBookmark(news)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate {
+                    Completable.timer(500, TimeUnit.MILLISECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            isDialogVisible.value = false
+                        }
+                }
                 .subscribe({
                     isNewsBookmarked.value = false
                 }, { t ->
@@ -64,5 +81,10 @@ class MoreOptionsViewModel @ViewModelInject constructor(
 
     fun shareNews() {
         isNewsShared.value = true
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
     }
 }

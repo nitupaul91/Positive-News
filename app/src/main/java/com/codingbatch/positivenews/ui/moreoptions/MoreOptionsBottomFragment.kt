@@ -24,8 +24,7 @@ class MoreOptionsBottomFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.bottom_fragment_more_options, container, false)
-        return view
+        return inflater.inflate(R.layout.bottom_fragment_more_options, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,11 +32,19 @@ class MoreOptionsBottomFragment : BottomSheetDialogFragment() {
         val news = requireArguments().getParcelable<News>(Constants.NEWS)
         setupDataBinding(view, news!!)
 
+        moreOptionsViewModel.setBookmarkStatus(news.id)
+
         moreOptionsViewModel.isNewsShared.observe(viewLifecycleOwner, Observer {
             if (it)
                 shareNews(news)
         })
-        moreOptionsViewModel.setBookmarkStatus(news.id)
+        moreOptionsViewModel.isDialogVisible.observe(
+            viewLifecycleOwner,
+            Observer { isDialogVisible ->
+                if (!isDialogVisible) {
+                    this.dismiss()
+                }
+            })
     }
 
     private fun shareNews(news: News) {
