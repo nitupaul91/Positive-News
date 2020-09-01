@@ -15,12 +15,12 @@ class MainActivityViewModel @ViewModelInject constructor(
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.hotNewsFragment -> {
-                changeDestinationId(R.id.hotNewsFragment)
+            R.id.hotNewsListFragment -> {
+                changeDestinationId(R.id.hotNewsListFragment)
                 return true
             }
-            R.id.savedNewsFragment -> {
-                changeDestinationId(R.id.savedNewsFragment)
+            R.id.bookmarkedNewsListFragment -> {
+                changeDestinationId(R.id.bookmarkedNewsListFragment)
                 return true
             }
 //            R.id.newNewsFragment -> {

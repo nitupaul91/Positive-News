@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/hotNewsFragment"
+        android:id="@+id/hotNewsListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_hot"
         android:title="@string/bottom_navigation_tab_hot" />
@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_new"
         android:title="@string/bottom_navigation_tab_new" />
     <item
-        android:id="@+id/savedNewsFragment"
+        android:id="@+id/bookmarkedNewsListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_bookmarked"
         android:title="@string/bottom_navigation_tab_saved" />

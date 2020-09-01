@@ -2,20 +2,35 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/newsListFragment">
+    app:startDestination="@id/hotNewsListFragment">
 
     <fragment
-        android:id="@+id/newsListFragment"
+        android:id="@+id/hotNewsListFragment"
         android:name="com.codingbatch.positivenews.ui.hotnewslist.HotNewsListFragment"
-        android:label="NewsListFragment">
+        android:label="HotNewsListFragment">
         <action
             android:id="@+id/action_newsListFragment_to_webFragment"
             app:destination="@id/webFragment" />
+        <action
+            android:id="@+id/action_newsListFragment_to_bookmarkNewsListFragment"
+            app:destination="@id/bookmarkedNewsListFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/webFragment"
         android:name="com.codingbatch.positivenews.ui.webview.WebFragment"
         android:label="WebFragment" />
+
+    <fragment
+        android:id="@+id/bookmarkedNewsListFragment"
+        android:name="com.codingbatch.positivenews.ui.bookmarkednewslist.BookmarkedNewsListFragment"
+        android:label="BookmarkedNewsListFragment">
+        <action
+            android:id="@+id/action_bookmarkNewsListFragment_to_webFragment"
+            app:destination="@id/webFragment" />
+        <action
+            android:id="@+id/action_bookmarkNewsListFragment_to_newsListFragment"
+            app:destination="@id/hotNewsListFragment" />
+    </fragment>
 
 </navigation>
