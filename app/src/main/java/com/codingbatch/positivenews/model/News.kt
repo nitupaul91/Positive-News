@@ -18,5 +18,5 @@ data class News(
     val domain: String,
     var isBookmarked: Boolean = false,
     @PrimaryKey
-    val id: String = UUID.randomUUID().toString()
+    val id: String
 ) : Parcelable

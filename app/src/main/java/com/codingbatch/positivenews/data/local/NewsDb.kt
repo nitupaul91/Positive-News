@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.codingbatch.positivenews.model.News
 
-@Database(entities = [News::class], version = 5, exportSchema = false )
+@Database(entities = [News::class], version = 7, exportSchema = false )
  abstract class NewsDb : RoomDatabase() {
     abstract fun newsDao() : NewsDao
 }

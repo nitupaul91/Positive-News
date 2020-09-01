@@ -26,5 +26,5 @@ class ChildrenData(
     @SerializedName("created")
     val created: Long,
     @SerializedName("name")
-    val fullName: String?
+    val fullName: String
 )

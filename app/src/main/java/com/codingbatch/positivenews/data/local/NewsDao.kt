@@ -21,7 +21,7 @@ interface NewsDao {
     @Query("SELECT * FROM news WHERE id = :id")
     fun getNewsById(id: String): Single<News>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveNews(newsList: List<News>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

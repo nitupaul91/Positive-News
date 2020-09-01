@@ -74,7 +74,9 @@ class NewsRepository @Inject constructor(
                     child.data.NSFW,
                     child.data.ups,
                     child.data.fullName,
-                    child.data.domain
+                    child.data.domain,
+                    false,
+                    child.data.fullName
                 )
             )
         }

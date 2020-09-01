@@ -25,7 +25,9 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
     private val newsListAdapter: NewsListAdapter = NewsListAdapter(
         this,
         this
-    )
+    ).apply {
+        setHasStableIds(true)
+    }
 
     override fun getLayoutId() = R.layout.fragment_hot_news_list
 
@@ -48,7 +50,6 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
 
     override fun setupRecyclerView() {
         rvHotNewsList.apply {
-            newsListAdapter.setHasStableIds(true)
             adapter = newsListAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }
