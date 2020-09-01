@@ -1,4 +1,4 @@
-package com.codingbatch.positivenews.ui.newslist
+package com.codingbatch.positivenews.ui.hotnewslist
 
 import android.view.LayoutInflater
 import android.view.View

@@ -9,9 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.databinding.BottomFragmentMoreOptionsBinding
-import com.codingbatch.positivenews.databinding.FragmentNewsListBinding
 import com.codingbatch.positivenews.model.News
-import com.codingbatch.positivenews.ui.newslist.NewsListViewModel
 import com.codingbatch.positivenews.util.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint

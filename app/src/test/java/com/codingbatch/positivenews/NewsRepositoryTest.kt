@@ -36,10 +36,10 @@ class NewsRepositoryTest {
     @Test
     fun fetch_news_success() {
         val dummyNewsListSingle = Single.just(newsList)
-        `when`(newsRepository.getTopNews()).thenReturn(dummyNewsListSingle)
+        `when`(newsRepository.getHotNews()).thenReturn(dummyNewsListSingle)
 
-        val resultNewsListSingle = newsRepository.getTopNews()
-        Mockito.verify(newsRepository).getTopNews()
+        val resultNewsListSingle = newsRepository.getHotNews()
+        Mockito.verify(newsRepository).getHotNews()
         assertEquals(dummyNewsListSingle, resultNewsListSingle)
     }
 

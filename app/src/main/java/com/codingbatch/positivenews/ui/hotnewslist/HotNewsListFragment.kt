@@ -1,4 +1,4 @@
-package com.codingbatch.positivenews.ui.newslist
+package com.codingbatch.positivenews.ui.hotnewslist
 
 import android.os.Bundle
 import android.view.View
@@ -16,10 +16,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_news_list.*
 
 @AndroidEntryPoint
-class NewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
+class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
     NewsListAdapter.NewsScrollListener {
 
-    private val newsListViewModel: NewsListViewModel by viewModels()
+    private val hotNewsListViewModel: HotNewsListViewModel by viewModels()
 
     private lateinit var newsListAdapter: NewsListAdapter
 
@@ -29,7 +29,7 @@ class NewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
         val binding = FragmentNewsListBinding.bind(view)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            binding.viewModel = newsListViewModel
+            binding.viewModel = hotNewsListViewModel
         }
     }
 
@@ -46,9 +46,9 @@ class NewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
         newsListAdapter = NewsListAdapter(this, this)
         setupRecyclerView()
 
-        newsListViewModel.searchText.observe(viewLifecycleOwner, Observer {
+        hotNewsListViewModel.searchText.observe(viewLifecycleOwner, Observer {
             if (it.isNotEmpty())
-                newsListViewModel.searchNews()
+                hotNewsListViewModel.searchNews()
         })
     }
 
@@ -65,7 +65,7 @@ class NewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
     }
 
     override fun fetchMoreNews(after: String) {
-        newsListViewModel.getTopNews(after)
+        hotNewsListViewModel.getHotNews(after)
     }
 
 }

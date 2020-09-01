@@ -43,8 +43,8 @@ class NewsRepository @Inject constructor(
         return newsDao.getNewsById(newsId)
     }
 
-    fun getTopNews(after: String? = null): Single<List<News>> {
-        return newsApi.getTopNews(after = after)
+    fun getHotNews(after: String? = null): Single<List<News>> {
+        return newsApi.getHotNews(after = after)
             .flatMap(this::mapApiResponseToNews)
             .onErrorResumeNext {
                 getSavedNews()

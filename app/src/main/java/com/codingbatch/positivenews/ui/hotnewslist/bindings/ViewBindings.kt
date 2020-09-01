@@ -1,4 +1,4 @@
-package com.codingbatch.positivenews.ui.newslist.bindings
+package com.codingbatch.positivenews.ui.hotnewslist.bindings
 
 import android.view.View
 import android.widget.ImageView
@@ -8,7 +8,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.model.News
-import com.codingbatch.positivenews.ui.newslist.NewsListAdapter
+import com.codingbatch.positivenews.ui.hotnewslist.NewsListAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

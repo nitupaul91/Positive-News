@@ -1,4 +1,4 @@
-package com.codingbatch.positivenews.ui.newslist
+package com.codingbatch.positivenews.ui.hotnewslist
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.codingbatch.positivenews.util.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class NewsListViewModel @ViewModelInject constructor(
+class HotNewsListViewModel @ViewModelInject constructor(
     private val newsRepository: NewsRepository
 ) : BaseViewModel() {
 
@@ -19,13 +19,13 @@ class NewsListViewModel @ViewModelInject constructor(
 
     init {
         newsList.value = mutableListOf()
-        getTopNews()
+        getHotNews()
     }
 
-    fun getTopNews(after: String? = null) {
+    fun getHotNews(after: String? = null) {
         isLoading.value = true
         disposable.add(
-            newsRepository.getTopNews(after)
+            newsRepository.getHotNews(after)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doAfterTerminate { isLoading.value = false }
