@@ -9,5 +9,6 @@ object Constants {
     const val NEWS_BOOKMARK = "news_bookmark"
     const val NEWS = "news"
     const val TEXT_PLAIN = "text/plain"
+    const val DESTINATION_NOT_FOUND = "navigation destination not found"
 
 }

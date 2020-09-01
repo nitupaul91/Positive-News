@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.newslist.NewsListAdapter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class ViewBindings {
@@ -43,6 +44,15 @@ class ViewBindings {
         @BindingAdapter("android:loading")
         fun setLoadingVisibility(animation: LottieAnimationView, isLoading: Boolean) {
             animation.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        @JvmStatic
+        @BindingAdapter("onNavigationItemSelected")
+        fun setNavigationItemSelected(
+            bottomNavigationView: BottomNavigationView,
+            listener: BottomNavigationView.OnNavigationItemSelectedListener
+        ) {
+            bottomNavigationView.setOnNavigationItemSelectedListener(listener)
         }
     }
 }

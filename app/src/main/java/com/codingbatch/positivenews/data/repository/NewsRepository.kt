@@ -5,6 +5,7 @@ import com.codingbatch.positivenews.data.remote.NewsApi
 import com.codingbatch.positivenews.data.remote.response.NewsOverview
 import com.codingbatch.positivenews.model.News
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -14,6 +15,10 @@ class NewsRepository @Inject constructor(
 ) {
 
     private var newsList: List<News> = listOf()
+
+    fun getBookmarkedNews(): Flowable<List<News>> {
+        return newsDao.getBookmarkedNews()
+    }
 
     fun searchNews(searchText: String): List<News>? {
         val news = mutableListOf<News>()
