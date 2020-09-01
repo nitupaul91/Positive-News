@@ -1,4 +1,4 @@
-package com.codingbatch.positivenews.ui.hotnewslist.bindings
+package com.codingbatch.positivenews.ui.common.bindings
 
 import android.view.View
 import android.widget.ImageView
@@ -8,7 +8,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.model.News
-import com.codingbatch.positivenews.ui.hotnewslist.NewsListAdapter
+import com.codingbatch.positivenews.ui.common.adapter.NewsListAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -19,16 +19,19 @@ class ViewBindings {
         private const val DEFAULT = "default"
 
         @JvmStatic
-        @BindingAdapter("android:news")
+        @BindingAdapter("news")
         fun setNewsList(recyclerView: RecyclerView, newsList: MutableList<News>?) {
-            val adapter = recyclerView.adapter as NewsListAdapter
-            adapter.setNews(newsList)
+            val adapter = recyclerView.adapter as NewsListAdapter?
+            adapter?.setNews(newsList)
         }
 
         @JvmStatic
-        @BindingAdapter("android:thumbnail")
+        @BindingAdapter("thumbnail")
         fun setThumbnail(imageView: ImageView, url: String) {
-            setDefaultThumbnail(imageView, url)
+            setDefaultThumbnail(
+                imageView,
+                url
+            )
             Glide.with(imageView.context)
                 .load(url)
                 .dontAnimate()
@@ -41,7 +44,7 @@ class ViewBindings {
         }
 
         @JvmStatic
-        @BindingAdapter("android:loading")
+        @BindingAdapter("loading")
         fun setLoadingVisibility(animation: LottieAnimationView, isLoading: Boolean) {
             animation.visibility = if (isLoading) View.VISIBLE else View.GONE
         }

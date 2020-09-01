@@ -59,11 +59,11 @@
 
                 <ImageView
                     android:id="@+id/ivThumbnail"
+                    thumbnail="@{news.thumbnail}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/content_description_news_thumbnail"
                     android:scaleType="centerCrop"
-                    android:thumbnail="@{news.thumbnail}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

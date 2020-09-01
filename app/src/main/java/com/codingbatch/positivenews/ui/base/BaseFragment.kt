@@ -9,8 +9,9 @@ import androidx.navigation.Navigation
 
 abstract class BaseFragment : Fragment() {
 
-    abstract fun setupDataBinding(view: View)
     abstract fun getLayoutId(): Int
+    abstract fun setupDataBinding(view: View)
+    abstract fun setupRecyclerView()
 
     override fun onCreateView(
         inflater: LayoutInflater,

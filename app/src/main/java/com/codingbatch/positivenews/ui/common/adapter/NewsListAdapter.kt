@@ -1,18 +1,18 @@
-package com.codingbatch.positivenews.ui.hotnewslist
+package com.codingbatch.positivenews.ui.common.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.codingbatch.positivenews.databinding.ItemRegularListNewsBinding
+import com.codingbatch.positivenews.databinding.ItemListNewsBinding
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.util.setOnSafeClickListener
-import kotlinx.android.synthetic.main.item_regular_list_news.view.*
+import kotlinx.android.synthetic.main.item_list_news.view.*
 
 class NewsListAdapter(
     private val newsClickListener: NewsClickListener,
-    private val newsScrollListener: NewsScrollListener
+    private val newsScrollListener: NewsScrollListener? = null
 ) :
     RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
@@ -26,9 +26,9 @@ class NewsListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NewsListAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemRegularListNewsBinding.inflate(inflater, parent, false)
+        val binding = ItemListNewsBinding.inflate(inflater, parent, false)
 
         return ViewHolder(
             binding.root
@@ -37,10 +37,10 @@ class NewsListAdapter(
 
     override fun getItemCount() = newsList?.size ?: 0
 
-    override fun onBindViewHolder(holder: NewsListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindView(newsList!![position], newsClickListener)
         if (newsList!!.size > 18 && position == newsList!!.size - 1) {
-            newsScrollListener.fetchMoreNews(newsList!![newsList!!.size - 1].fullName!!)
+            newsScrollListener?.fetchMoreNews(newsList!![newsList!!.size - 1].fullName!!)
         }
     }
 
@@ -57,7 +57,7 @@ class NewsListAdapter(
             itemView.ivMoreOptions.setOnSafeClickListener {
                 newsClickListener.onMoreOptionsClicked(news)
             }
-            val binding: ItemRegularListNewsBinding = DataBindingUtil.getBinding(itemView)!!
+            val binding: ItemListNewsBinding = DataBindingUtil.getBinding(itemView)!!
             binding.news = news
         }
     }

@@ -7,13 +7,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.R
-import com.codingbatch.positivenews.databinding.FragmentNewsListBinding
+import com.codingbatch.positivenews.databinding.FragmentHotNewsListBinding
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.base.BaseFragment
+import com.codingbatch.positivenews.ui.common.adapter.NewsListAdapter
 import com.codingbatch.positivenews.ui.moreoptions.MoreOptionsBottomFragment
 import com.codingbatch.positivenews.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_news_list.*
+import kotlinx.android.synthetic.main.fragment_hot_news_list.*
 
 @AndroidEntryPoint
 class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
@@ -23,33 +24,36 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
 
     private lateinit var newsListAdapter: NewsListAdapter
 
-    override fun getLayoutId() = R.layout.fragment_news_list
+    override fun getLayoutId() = R.layout.fragment_hot_news_list
 
     override fun setupDataBinding(view: View) {
-        val binding = FragmentNewsListBinding.bind(view)
+        val binding = FragmentHotNewsListBinding.bind(view)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             binding.viewModel = hotNewsListViewModel
         }
     }
 
-    private fun setupRecyclerView() {
-        rvNewsList.apply {
-            adapter?.setHasStableIds(true)
-            adapter = newsListAdapter
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        newsListAdapter = NewsListAdapter(this, this)
-        setupRecyclerView()
+        newsListAdapter =
+            NewsListAdapter(
+                this,
+                this
+            )
+        newsListAdapter.setHasStableIds(true)
 
         hotNewsListViewModel.searchText.observe(viewLifecycleOwner, Observer {
             if (it.isNotEmpty())
                 hotNewsListViewModel.searchNews()
         })
+    }
+
+    override fun setupRecyclerView() {
+        rvHotNewsList.apply {
+            adapter = newsListAdapter
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        }
     }
 
     override fun onNewsClicked(news: News) {
