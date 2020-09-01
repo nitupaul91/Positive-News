@@ -6,11 +6,6 @@
         android:icon="@drawable/ic_hot"
         android:title="@string/bottom_navigation_tab_hot" />
     <item
-        android:id="@+id/newNewsFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_new"
-        android:title="@string/bottom_navigation_tab_new" />
-    <item
         android:id="@+id/bookmarkedNewsListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_bookmarked"

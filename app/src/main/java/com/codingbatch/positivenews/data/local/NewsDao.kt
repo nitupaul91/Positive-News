@@ -26,4 +26,7 @@ interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveNewsItem(news: News): Completable
+
+    @Query("DELETE FROM news WHERE isBookmarked = 0")
+    fun deleteNonBookmarkedNews(): Completable
 }

@@ -20,9 +20,12 @@ import kotlinx.android.synthetic.main.fragment_hot_news_list.*
 class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
     NewsListAdapter.NewsScrollListener {
 
-    private val hotNewsListViewModel: HotNewsListViewModel by viewModels()
+    private val hotNewsListViewModel: HotNewsListViewModel by viewModels(this::requireActivity)
 
-    private lateinit var newsListAdapter: NewsListAdapter
+    private val newsListAdapter: NewsListAdapter = NewsListAdapter(
+        this,
+        this
+    )
 
     override fun getLayoutId() = R.layout.fragment_hot_news_list
 
@@ -36,12 +39,6 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        newsListAdapter =
-            NewsListAdapter(
-                this,
-                this
-            )
-        newsListAdapter.setHasStableIds(true)
 
         hotNewsListViewModel.searchText.observe(viewLifecycleOwner, Observer {
             if (it.isNotEmpty())
@@ -51,6 +48,7 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
 
     override fun setupRecyclerView() {
         rvHotNewsList.apply {
+            newsListAdapter.setHasStableIds(true)
             adapter = newsListAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }

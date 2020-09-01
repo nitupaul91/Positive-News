@@ -23,6 +23,11 @@ abstract class BaseFragment : Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+    }
+
     fun navigateTo(destinationId: Int, args: Bundle) {
         Navigation.findNavController(requireView())
             .navigate(destinationId, args)

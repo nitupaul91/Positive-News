@@ -19,7 +19,9 @@ import kotlinx.android.synthetic.main.fragment_bookmarked_news_list.*
 class BookmarkedNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener {
 
     private val bookmarkedNewsListViewModel: BookmarkedNewsListViewModel by viewModels()
-    private lateinit var newsListAdapter: NewsListAdapter
+    private val newsListAdapter: NewsListAdapter = NewsListAdapter(
+        this
+    )
 
     override fun getLayoutId() = R.layout.fragment_bookmarked_news_list
 
@@ -29,14 +31,6 @@ class BookmarkedNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickList
             lifecycleOwner = viewLifecycleOwner
             binding.viewModel = bookmarkedNewsListViewModel
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        newsListAdapter =
-            NewsListAdapter(
-                this
-            )
     }
 
     override fun setupRecyclerView() {

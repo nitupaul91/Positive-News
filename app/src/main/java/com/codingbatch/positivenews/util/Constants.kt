@@ -10,5 +10,6 @@ object Constants {
     const val NEWS = "news"
     const val TEXT_PLAIN = "text/plain"
     const val DESTINATION_NOT_FOUND = "navigation destination not found"
+    const val MAX_NEWS_ENTRIES = 200
 
 }
