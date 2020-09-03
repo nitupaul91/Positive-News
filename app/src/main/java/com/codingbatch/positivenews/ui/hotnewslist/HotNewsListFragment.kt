@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.databinding.FragmentHotNewsListBinding
 import com.codingbatch.positivenews.model.News
@@ -41,6 +39,7 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView(rvHotNewsList, newsListAdapter)
 
         hotNewsListViewModel.searchText.observe(viewLifecycleOwner, Observer { searchText ->
             if (searchText.isNotEmpty())
@@ -54,13 +53,6 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
                     showSnackbar(rootLayoutHotNews, R.string.snackbar_no_connection)
             })
 
-    }
-
-    override fun setupRecyclerView() {
-        rvHotNewsList.apply {
-            adapter = newsListAdapter
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        }
     }
 
     override fun onNewsClicked(news: News) {

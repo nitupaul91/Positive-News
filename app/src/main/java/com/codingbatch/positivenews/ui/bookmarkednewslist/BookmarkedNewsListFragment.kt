@@ -33,11 +33,9 @@ class BookmarkedNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickList
         }
     }
 
-    override fun setupRecyclerView() {
-        rvBookmarkedNewsList.apply {
-            adapter = newsListAdapter
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView(rvBookmarkedNewsList, newsListAdapter)
     }
 
     override fun onNewsClicked(news: News) {

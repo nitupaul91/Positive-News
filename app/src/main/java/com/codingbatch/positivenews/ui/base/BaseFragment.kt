@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.codingbatch.positivenews.ui.common.adapter.NewsListAdapter
 import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment : Fragment() {
 
     abstract fun getLayoutId(): Int
     abstract fun setupDataBinding(view: View)
-    abstract fun setupRecyclerView()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,11 +26,6 @@ abstract class BaseFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
-    }
-
     fun navigateTo(destinationId: Int, args: Bundle) {
         Navigation.findNavController(requireView())
             .navigate(destinationId, args)
@@ -37,5 +34,16 @@ abstract class BaseFragment : Fragment() {
     fun showSnackbar(view: View, messageId: Int) {
         Snackbar.make(view, messageId, Snackbar.LENGTH_LONG)
             .show()
+    }
+
+    fun setupRecyclerView(
+        recyclerView: RecyclerView,
+        adapter: NewsListAdapter
+    ) {
+        recyclerView.apply {
+            this.adapter = adapter
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+
+        }
     }
 }
