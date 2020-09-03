@@ -33,7 +33,7 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
         val binding = FragmentHotNewsListBinding.bind(view)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            binding.viewModel = hotNewsListViewModel
+            viewModel = hotNewsListViewModel
         }
     }
 

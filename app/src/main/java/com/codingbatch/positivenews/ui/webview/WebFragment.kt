@@ -1,30 +1,52 @@
 package com.codingbatch.positivenews.ui.webview
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.codingbatch.positivenews.R
+import com.codingbatch.positivenews.databinding.FragmentWebBinding
 import com.codingbatch.positivenews.ui.base.BaseFragment
 import com.codingbatch.positivenews.util.Constants
 import kotlinx.android.synthetic.main.fragment_web.*
 
 class WebFragment : BaseFragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_web, container, false)
+    private val webViewModel: WebViewModel by viewModels()
+
+    override fun getLayoutId() = R.layout.fragment_web
+
+    override fun setupDataBinding(view: View) {
+        val binding = FragmentWebBinding.bind(view)
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = webViewModel
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val url = arguments?.getString(Constants.NEWS_URL)
+        setupWebView(arguments?.getString(Constants.NEWS_URL))
 
-        webView.loadUrl(url)
+        webViewModel.isBackPressed.observe(viewLifecycleOwner, Observer { isBackPressed ->
+            if (isBackPressed)
+                navigateBack()
+        })
+    }
+
+    private fun setupWebView(url: String?) {
+        webView.apply {
+            webChromeClient = WebClient(object : OnPageLoadedListener {
+                override fun onLoadingStarted() {
+                    webViewModel.loadingStarted()
+                }
+
+                override fun onLoadingComplete() {
+                    webViewModel.loadingComplete()
+                }
+            })
+            loadUrl(url)
+        }
     }
 }

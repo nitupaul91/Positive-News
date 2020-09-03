@@ -86,9 +86,4 @@ class MoreOptionsViewModel @ViewModelInject constructor(
     fun shareNews() {
         isNewsShared.value = true
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
-    }
 }

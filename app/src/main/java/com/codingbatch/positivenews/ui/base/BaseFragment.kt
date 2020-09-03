@@ -26,9 +26,14 @@ abstract class BaseFragment : Fragment() {
         return view
     }
 
-    fun navigateTo(destinationId: Int, args: Bundle) {
+    fun navigateTo(destinationId: Int, args: Bundle? = null) {
         Navigation.findNavController(requireView())
             .navigate(destinationId, args)
+    }
+
+    fun navigateBack() {
+        Navigation.findNavController(requireView())
+            .navigateUp()
     }
 
     fun showSnackbar(view: View, messageId: Int) {
