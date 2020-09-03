@@ -19,4 +19,9 @@
 
     <!--    NewsListFragment-->
     <string name="news_list_fragment_item_header">Today\'s news</string>
+
+    <!--    BookmarkListFragment-->
+    <string name="remove_all_bookmarks">Remove all bookmarks</string>
+    <string name="bookmarks_placeholder_text">You have no bookmarks yet.</string>
+
 </resources>

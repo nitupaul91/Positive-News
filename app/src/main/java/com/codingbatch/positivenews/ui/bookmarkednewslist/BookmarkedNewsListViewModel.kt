@@ -13,9 +13,25 @@ class BookmarkedNewsListViewModel @ViewModelInject constructor(
 ) : BaseViewModel() {
 
     val bookmarkedNewsList = MutableLiveData<List<News>>()
+    val isRemoveButtonVisible = MutableLiveData<Boolean>()
+    val isPlaceHolderTextVisible = MutableLiveData<Boolean>()
 
     init {
         getBookmarkedNews()
+    }
+
+    fun deleteAllBookmarks() {
+        disposable.add(
+            repository.deleteAllBookmarkedNews()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    //todo hide text when there are no bookmarks left
+                    //todo also add placeholder text
+                }, { throwable ->
+                    throwable.printStackTrace()
+                })
+        )
     }
 
     private fun getBookmarkedNews() {
@@ -24,6 +40,8 @@ class BookmarkedNewsListViewModel @ViewModelInject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({ news ->
+                    isRemoveButtonVisible.value = news.isNotEmpty()
+                    isPlaceHolderTextVisible.value = news.isEmpty()
                     bookmarkedNewsList.value = news
                 }, { throwable ->
                     throwable.printStackTrace()

@@ -25,6 +25,10 @@ class NewsRepository @Inject constructor(
         return newsDao.getBookmarkedNews()
     }
 
+    fun deleteAllBookmarkedNews(): Completable {
+        return newsDao.deleteAllBookmarkedNews()
+    }
+
     fun searchNews(searchText: String): List<News>? {
         val news = mutableListOf<News>()
         newsList.forEach { newsItem ->

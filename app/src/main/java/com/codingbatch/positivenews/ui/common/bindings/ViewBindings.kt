@@ -57,5 +57,11 @@ class ViewBindings {
         ) {
             bottomNavigationView.setOnNavigationItemSelectedListener(listener)
         }
+
+        @JvmStatic
+        @BindingAdapter("isVisible")
+        fun isVisible(view: View, isVisible: Boolean) {
+            view.visibility = if (isVisible) View.VISIBLE else View.GONE
+        }
     }
 }

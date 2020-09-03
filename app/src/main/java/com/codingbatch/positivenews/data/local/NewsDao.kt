@@ -29,4 +29,7 @@ interface NewsDao {
 
     @Query("DELETE FROM news WHERE isBookmarked = 0")
     fun deleteNonBookmarkedNews(): Completable
+
+    @Query("DELETE FROM news WHERE isBookmarked = 1")
+    fun deleteAllBookmarkedNews(): Completable
 }
