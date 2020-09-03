@@ -6,6 +6,7 @@
         <variable
             name="viewModel"
             type="com.codingbatch.positivenews.ui.hotnewslist.HotNewsListViewModel" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,11 +25,12 @@
             app:lottie_fileName="loading_anim_two.json"
             app:lottie_loop="true" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:onRefreshListener="@{() -> viewModel.refreshNews()}"
+            app:refreshing="@{viewModel.isRefreshing()}">
 
             <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/rvHotNewsList"
@@ -36,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:listitem="@layout/item_list_news" />
-        </LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/toolbarLayout"
@@ -57,12 +59,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/white"
-                    android:textCursorDrawable="@null"
                     android:drawableStart="@drawable/ic_search"
-                    android:imeOptions="actionSearch"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
-                    android:text="@={viewModel.searchText}" />
+                    android:singleLine="true"
+                    android:text="@={viewModel.searchText}"
+                    android:textCursorDrawable="@null" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>

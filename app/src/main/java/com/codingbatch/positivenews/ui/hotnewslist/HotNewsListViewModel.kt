@@ -16,6 +16,7 @@ class HotNewsListViewModel @ViewModelInject constructor(
     val newsList = MutableLiveData<List<News>>()
     val isLoading = MutableLiveData<Boolean>()
     val searchText = MutableLiveData<String>()
+    val isRefreshing = MutableLiveData<Boolean>()
 
     init {
         newsList.value = mutableListOf()
@@ -28,7 +29,10 @@ class HotNewsListViewModel @ViewModelInject constructor(
             newsRepository.getHotNews(after)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .doAfterTerminate { isLoading.value = false }
+                .doAfterTerminate {
+                    isLoading.value = false
+                    isRefreshing.value = false
+                }
                 .subscribe({ news ->
                     newsList.plusAssign(news)
                 }, { throwable ->
@@ -37,12 +41,13 @@ class HotNewsListViewModel @ViewModelInject constructor(
         )
     }
 
+    fun refreshNews() {
+        isRefreshing.value = true
+        getHotNews()
+    }
+
     fun searchNews() {
         val searchText = searchText.value ?: ""
-        if (searchText.isEmpty()) {
-//todo display snackbar empty search
-            return
-        }
         newsList.value = newsRepository.searchNews(searchText)
     }
 
