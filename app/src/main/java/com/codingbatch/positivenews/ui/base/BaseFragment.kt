@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment : Fragment() {
 
@@ -31,5 +32,10 @@ abstract class BaseFragment : Fragment() {
     fun navigateTo(destinationId: Int, args: Bundle) {
         Navigation.findNavController(requireView())
             .navigate(destinationId, args)
+    }
+
+    fun showSnackbar(view: View, messageId: Int) {
+        Snackbar.make(view, messageId, Snackbar.LENGTH_LONG)
+            .show()
     }
 }

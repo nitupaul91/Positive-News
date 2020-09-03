@@ -1,12 +1,11 @@
 package com.codingbatch.positivenews.data.repository
 
-import android.content.Context
 import com.codingbatch.positivenews.data.local.NewsDao
 import com.codingbatch.positivenews.data.remote.NewsApi
 import com.codingbatch.positivenews.data.remote.response.NewsOverview
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.util.Constants
-import com.codingbatch.positivenews.util.NetworkStatus
+import com.codingbatch.positivenews.util.NetworkManager
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -15,7 +14,7 @@ import javax.inject.Inject
 class NewsRepository @Inject constructor(
     private val newsApi: NewsApi,
     private val newsDao: NewsDao,
-    private val context: Context
+    private val networkManager: NetworkManager
 ) {
 
     private var newsList: List<News> = listOf()
@@ -53,7 +52,7 @@ class NewsRepository @Inject constructor(
     }
 
     fun getHotNews(after: String? = null): Single<List<News>> {
-        if (NetworkStatus.isConnected(context) && newsCount > Constants.MAX_NEWS_ENTRIES)
+        if (networkManager.isNetworkAvailable() && newsCount > Constants.MAX_NEWS_ENTRIES)
             deleteNonBookmarkedNews()
 
         return newsApi.getHotNews(after = after)

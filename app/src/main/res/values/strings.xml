@@ -19,8 +19,8 @@
     <string name="more_options_snackbar_bookmark_added">Bookmark added.</string>
     <string name="more_options_snackbar_bookmark_removed">Bookmark removed.</string>
 
-    <!--    NewsListFragment-->
-    <string name="news_list_fragment_item_header">Today\'s news</string>
+    <!--    HotNewsListFragment-->
+    <string name="snackbar_no_connection">Oops. No connection is available. Please try again later.</string>
 
     <!--    BookmarkListFragment-->
     <string name="remove_all_bookmarks">Remove all bookmarks</string>

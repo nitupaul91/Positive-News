@@ -3,13 +3,14 @@ package com.codingbatch.positivenews.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import javax.inject.Inject
 
-object NetworkStatus {
+class NetworkManager @Inject constructor(val context: Context) {
 
-    fun isConnected(context: Context): Boolean {
+    fun isNetworkAvailable(): Boolean {
         val cm = context
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo = cm.activeNetworkInfo
+        val activeNetwork: NetworkInfo = cm.activeNetworkInfo ?: return false
         return activeNetwork.isConnected
     }
 }

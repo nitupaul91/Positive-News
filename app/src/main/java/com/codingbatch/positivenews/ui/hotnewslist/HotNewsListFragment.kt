@@ -42,10 +42,18 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        hotNewsListViewModel.searchText.observe(viewLifecycleOwner, Observer {
-            if (it.isNotEmpty())
+        hotNewsListViewModel.searchText.observe(viewLifecycleOwner, Observer { searchText ->
+            if (searchText.isNotEmpty())
                 hotNewsListViewModel.searchNews()
         })
+
+        hotNewsListViewModel.isNetworkAvailable.observe(
+            viewLifecycleOwner,
+            Observer { isNetworkAvailable ->
+                if (!isNetworkAvailable)
+                    showSnackbar(rootLayoutHotNews, R.string.snackbar_no_connection)
+            })
+
     }
 
     override fun setupRecyclerView() {

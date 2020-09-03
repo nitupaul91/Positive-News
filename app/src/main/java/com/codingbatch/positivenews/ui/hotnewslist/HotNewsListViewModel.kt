@@ -5,18 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import com.codingbatch.positivenews.data.repository.NewsRepository
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.base.BaseViewModel
+import com.codingbatch.positivenews.util.NetworkManager
 import com.codingbatch.positivenews.util.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class HotNewsListViewModel @ViewModelInject constructor(
-    private val newsRepository: NewsRepository
+    private val newsRepository: NewsRepository,
+    private val networkManager: NetworkManager
 ) : BaseViewModel() {
 
     val newsList = MutableLiveData<List<News>>()
     val isLoading = MutableLiveData<Boolean>()
     val searchText = MutableLiveData<String>()
     val isRefreshing = MutableLiveData<Boolean>()
+    val isNetworkAvailable = MutableLiveData<Boolean>()
 
     init {
         newsList.value = mutableListOf()
@@ -25,6 +28,7 @@ class HotNewsListViewModel @ViewModelInject constructor(
 
     fun getHotNews(after: String? = null) {
         isLoading.value = true
+        isNetworkAvailable.value = networkManager.isNetworkAvailable()
         disposable.add(
             newsRepository.getHotNews(after)
                 .observeOn(AndroidSchedulers.mainThread())
