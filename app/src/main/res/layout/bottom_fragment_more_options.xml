@@ -12,52 +12,59 @@
             type="com.codingbatch.positivenews.model.News" />
     </data>
 
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/BottomSheetDialog"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:gravity="bottom"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvBookmark"
+        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            style="@style/BottomSheetDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:drawablePadding="12dp"
-            android:fontFamily="@font/roboto_medium"
-            android:onClick="@{()->viewModel.onBookmarkClicked(news)}"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:textSize="16sp"
-            app:bookmarkText="@{viewModel.isNewsBookmarked()}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:drawableStart="@drawable/ic_bookmark_border"
-            tools:text="Read later" />
+            android:layout_margin="24dp"
+            android:gravity="bottom"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvShare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:drawableStart="@drawable/ic_share"
-            android:drawablePadding="12dp"
-            android:fontFamily="@font/roboto_medium"
-            android:onClick="@{()-> viewModel.shareNews()}"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:text="@string/more_options_share_button"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvBookmark" />
+            <TextView
+                android:id="@+id/tvBookmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="12dp"
+                android:fontFamily="@font/roboto_medium"
+                android:onClick="@{()->viewModel.onBookmarkClicked(news)}"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="16sp"
+                app:bookmarkText="@{viewModel.isNewsBookmarked()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:drawableStart="@drawable/ic_bookmark_border"
+                tools:text="Read later" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvShare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/ic_share"
+                android:drawablePadding="12dp"
+                android:fontFamily="@font/roboto_medium"
+                android:onClick="@{()-> viewModel.shareNews()}"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="@string/more_options_share_button"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBookmark" />
+
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

@@ -12,7 +12,9 @@ import com.codingbatch.positivenews.databinding.BottomFragmentMoreOptionsBinding
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.util.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.bottom_fragment_more_options.*
 
 @AndroidEntryPoint
 class MoreOptionsBottomFragment : BottomSheetDialogFragment() {
@@ -38,6 +40,10 @@ class MoreOptionsBottomFragment : BottomSheetDialogFragment() {
             if (it)
                 shareNews(news)
         })
+        moreOptionsViewModel.snackbarMessageId.observe(viewLifecycleOwner, Observer { snackbarMessageId ->
+            Snackbar.make(rootLayout, snackbarMessageId, Snackbar.LENGTH_LONG).show()
+        })
+
         moreOptionsViewModel.isDialogVisible.observe(
             viewLifecycleOwner,
             Observer { isDialogVisible ->

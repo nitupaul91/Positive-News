@@ -2,6 +2,7 @@ package com.codingbatch.positivenews.ui.moreoptions
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.data.repository.NewsRepository
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.base.BaseViewModel
@@ -18,6 +19,7 @@ class MoreOptionsViewModel @ViewModelInject constructor(
     val isNewsBookmarked = MutableLiveData<Boolean>()
     val isNewsShared = MutableLiveData<Boolean>()
     val isDialogVisible = MutableLiveData<Boolean>()
+    val snackbarMessageId = MutableLiveData<Int>()
 
     fun setBookmarkStatus(newsId: String) {
         disposable.add(
@@ -52,6 +54,7 @@ class MoreOptionsViewModel @ViewModelInject constructor(
                         }
                 }
                 .subscribe({
+                    snackbarMessageId.value = R.string.more_options_snackbar_bookmark_added
                     isNewsBookmarked.value = true
                 }, { t ->
                     t.printStackTrace()
@@ -65,13 +68,14 @@ class MoreOptionsViewModel @ViewModelInject constructor(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate {
-                    Completable.timer(500, TimeUnit.MILLISECONDS)
+                    Completable.timer(800, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe {
                             isDialogVisible.value = false
                         }
                 }
                 .subscribe({
+                    snackbarMessageId.value = R.string.more_options_snackbar_bookmark_removed
                     isNewsBookmarked.value = false
                 }, { t ->
                     t.printStackTrace()
