@@ -27,10 +27,10 @@
             <TextView
                 android:id="@+id/tvBack"
                 android:layout_width="wrap_content"
-                android:gravity="start"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/white"
                 android:drawableStart="@drawable/ic_arrow_back"
+                android:gravity="start"
                 android:onClick="@{()->viewModel.onBackPressed()}"
                 android:padding="12dp" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -53,6 +53,17 @@
             app:lottie_loop="true"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:textColor="@color/medium_gray"
+            android:textSize="30sp"
+            isVisible="@{viewModel.isError()}"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

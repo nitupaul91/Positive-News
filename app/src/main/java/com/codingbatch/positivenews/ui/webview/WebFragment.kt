@@ -37,13 +37,19 @@ class WebFragment : BaseFragment() {
 
     private fun setupWebView(url: String?) {
         webView.apply {
-            webChromeClient = WebClient(object : OnPageLoadedListener {
+            webChromeClient = WebClient(object : PageLoadProgress {
                 override fun onLoadingStarted() {
                     webViewModel.loadingStarted()
                 }
 
                 override fun onLoadingComplete() {
                     webViewModel.loadingComplete()
+                }
+            })
+
+            webViewClient = SimpleWebClient(object : PageResult{
+                override fun onErrorReceived() {
+                    webViewModel.setError()
                 }
             })
             loadUrl(url)

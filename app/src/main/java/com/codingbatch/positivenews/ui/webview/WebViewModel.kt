@@ -9,6 +9,7 @@ class WebViewModel @ViewModelInject constructor(
 
     val isLoading = MutableLiveData<Boolean>()
     val isBackPressed = MutableLiveData<Boolean>()
+    val isError = MutableLiveData<Boolean>()
 
     fun loadingStarted() {
         isLoading.value = true
@@ -22,4 +23,8 @@ class WebViewModel @ViewModelInject constructor(
         isBackPressed.value = true
     }
 
+    fun setError() {
+        isError.value = true
+        //todo add vector background for error
+    }
 }
