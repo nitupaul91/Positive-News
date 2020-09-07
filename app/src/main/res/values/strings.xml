@@ -26,4 +26,8 @@
     <string name="remove_all_bookmarks">Remove all bookmarks</string>
     <string name="bookmarks_placeholder_text">You have no bookmarks yet.</string>
 
+    <!--    WebFragment-->
+    <string name="remove_ads">Remove ads</string>
+    <string name="block_news_source">Block source</string>
+
 </resources>

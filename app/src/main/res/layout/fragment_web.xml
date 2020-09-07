@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="news"
+            type="com.codingbatch.positivenews.model.News" />
+
+        <variable
             name="viewModel"
             type="com.codingbatch.positivenews.ui.webview.WebViewModel" />
 
@@ -13,7 +17,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar"
@@ -38,7 +43,8 @@
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/tvRemoveAds"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -47,27 +53,59 @@
             loading="@{viewModel.isLoading()}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white_80"
             android:layout_gravity="center"
-            app:lottie_autoPlay="true"
+            android:background="@color/white_80"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:lottie_autoPlay="true"
             app:lottie_fileName="loading_anim_two.json"
             app:lottie_loop="true"
-            app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
         <TextView
+            isVisible="@{viewModel.isError()}"
             android:layout_width="0dp"
+            android:layout_height="0dp"
             android:textColor="@color/medium_gray"
             android:textSize="30sp"
-            isVisible="@{viewModel.isError()}"
-            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/tvRemoveAds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_remove_circle_outline"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
+            android:text="@string/remove_ads"
+            android:textColor="@color/medium_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvMoreOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_more_vertical"
+            android:padding="4dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvRemoveAds" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
