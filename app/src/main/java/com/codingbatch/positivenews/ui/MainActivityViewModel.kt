@@ -15,7 +15,6 @@ class MainActivityViewModel @ViewModelInject constructor(
 ) : BaseViewModel(), BottomNavigationView.OnNavigationItemSelectedListener{
 
     val destinationId = MutableLiveData<Int>()
-//    val isVisible = MutableLiveData<Boolean>().apply { value = true }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

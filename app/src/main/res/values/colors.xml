@@ -5,7 +5,13 @@
     <color name="colorAccent">#D81B60</color>
     <color name="light_gray">#ddd</color>
     <color name="medium_gray">#B2B2B2</color>
+
     <color name="white">#FFFFFF</color>
+    <color name="white_20">#33ffffff</color>
+    <color name="white_40">#66ffffff</color>
+    <color name="white_60">#99ffffff</color>
+    <color name="white_80">#CCffffff</color>
+
     <color name="black">#000</color>
     <color name="purple">#c09afd</color>
     <color name="dark_purple">#2e137a</color>
