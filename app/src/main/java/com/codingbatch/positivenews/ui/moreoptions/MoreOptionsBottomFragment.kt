@@ -71,7 +71,7 @@ class MoreOptionsBottomFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(news: News): MoreOptionsBottomFragment {
+        fun newInstance(news: News?): MoreOptionsBottomFragment {
             val fragment = MoreOptionsBottomFragment()
             val args = Bundle()
             args.putParcelable(Constants.NEWS, news)

@@ -20,7 +20,7 @@
     <string name="more_options_snackbar_bookmark_removed">Bookmark removed.</string>
 
     <!--    HotNewsListFragment-->
-    <string name="snackbar_no_connection">Oops. No connection is available. Please try again later.</string>
+    <string name="snackbar_no_connection">No connection is available. Please try again later.</string>
 
     <!--    BookmarkListFragment-->
     <string name="remove_all_bookmarks">Remove all bookmarks</string>
@@ -29,5 +29,6 @@
     <!--    WebFragment-->
     <string name="remove_ads">Remove ads</string>
     <string name="block_news_source">Block source</string>
+    <string name="loading_error">Could not load page.</string>
 
 </resources>

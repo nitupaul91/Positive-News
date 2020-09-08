@@ -57,7 +57,7 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
 
     override fun onNewsClicked(news: News) {
         val args = Bundle()
-        args.putString(Constants.NEWS_URL, news.url)
+        args.putParcelable(Constants.NEWS, news)
         arguments = args
         navigateTo(R.id.action_newsListFragment_to_webFragment, args)
     }

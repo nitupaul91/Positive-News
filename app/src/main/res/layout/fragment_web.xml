@@ -44,7 +44,7 @@
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/tvRemoveAds"
+            app:layout_constraintBottom_toTopOf="@id/tvBlockNewsSource"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -66,30 +66,30 @@
 
         <TextView
             isVisible="@{viewModel.isError()}"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:textColor="@color/medium_gray"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/tvRemoveAds"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_remove_circle_outline"
+            android:drawableTop="@drawable/ic_page_not_found"
+            android:fontFamily="@font/roboto_black"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/loading_error"
+            android:textColor="@color/medium_gray"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvBlockNewsSource"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <TextView
+            android:id="@+id/tvBlockNewsSource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_block"
             android:drawablePadding="6dp"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
-            android:paddingStart="12dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="8dp"
-            android:text="@string/remove_ads"
+            android:padding="16dp"
+            android:text="@string/block_news_source"
             android:textColor="@color/medium_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -100,12 +100,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_more_vertical"
+            android:onClick="@{()-> viewModel.onMoreOptionsClicked()}"
             android:padding="4dp"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvRemoveAds" />
+            app:layout_constraintTop_toTopOf="@+id/tvBlockNewsSource" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

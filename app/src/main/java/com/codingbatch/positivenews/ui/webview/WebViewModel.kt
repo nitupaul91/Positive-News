@@ -10,6 +10,11 @@ class WebViewModel @ViewModelInject constructor(
     val isLoading = MutableLiveData<Boolean>()
     val isBackPressed = MutableLiveData<Boolean>()
     val isError = MutableLiveData<Boolean>()
+    val isMoreOptionsClicked = MutableLiveData<Boolean>()
+
+    fun onMoreOptionsClicked() {
+        isMoreOptionsClicked.value = true
+    }
 
     fun loadingStarted() {
         isLoading.value = true
