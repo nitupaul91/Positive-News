@@ -22,7 +22,7 @@ interface NewsDao {
     fun getNewsById(id: String): Single<News>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveNews(newsList: List<News>)
+    fun saveNews(newsList: List<News>): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveNewsItem(news: News): Completable

@@ -23,31 +23,37 @@ class HotNewsListViewModel @ViewModelInject constructor(
 
     init {
         newsList.value = mutableListOf()
-        getHotNews()
+        fetchHotNewsFromApi()
     }
 
-    fun getHotNews(after: String? = null) {
+    private fun fetchHotNewsFromApi(after: String? = null) {
         isLoading.value = true
-        isNetworkAvailable.value = networkManager.isNetworkAvailable()
-        disposable.add(
-            newsRepository.getHotNews(after)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .doAfterTerminate {
-                    isLoading.value = false
-                    isRefreshing.value = false
-                }
-                .subscribe({ news ->
-                    newsList.plusAssign(news)
-                }, { throwable ->
-                    throwable.printStackTrace()
-                })
+        disposable.add(newsRepository.deleteNonBookmarkedNews()
+            .andThen(newsRepository.fetchHotNewsFromApi(after))
+            .andThen(newsRepository.getHotNews())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doAfterTerminate {
+                isLoading.value = false
+                isRefreshing.value = false
+            }
+            .subscribeOn(Schedulers.io())
+            .subscribe({ news ->
+                newsList.plusAssign(news)
+            }, { t ->
+                t.printStackTrace()
+            })
+
         )
+    }
+
+    fun fetchMoreNews(after: String? = null) {
+        fetchHotNewsFromApi(after)
     }
 
     fun refreshNews() {
         isRefreshing.value = true
-        getHotNews()
+        newsList.value = emptyList()
+        fetchHotNewsFromApi()
     }
 
     fun searchNews() {

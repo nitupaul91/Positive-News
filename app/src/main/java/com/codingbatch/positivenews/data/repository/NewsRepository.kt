@@ -10,59 +10,32 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class NewsRepository @Inject constructor(
     private val newsApi: NewsApi,
     private val newsDao: NewsDao,
     private val networkManager: NetworkManager
 ) {
 
-    private var newsList: List<News> = listOf()
+    private var newsList: MutableList<News> = mutableListOf()
     private var newsCount: Int = 0
 
-    fun getBookmarkedNews(): Flowable<List<News>> {
-        return newsDao.getBookmarkedNews()
+    fun fetchHotNewsFromApi(after: String? = null): Completable {
+        return if (networkManager.isNetworkAvailable() && newsCount > Constants.MAX_NEWS_ENTRIES)
+            deleteNonBookmarkedNews().andThen(
+                newsApi.getHotNews(after = after)
+                    .flatMap(this::mapApiResponseToNews)
+                    .flatMapCompletable(this::saveNews)
+            )
+        else
+            newsApi.getHotNews(after = after)
+                .flatMap(this::mapApiResponseToNews)
+                .flatMapCompletable(this::saveNews)
     }
 
-    fun deleteAllBookmarkedNews(): Completable {
-        return newsDao.deleteAllBookmarkedNews()
-    }
-
-    fun searchNews(searchText: String): List<News>? {
-        val news = mutableListOf<News>()
-        newsList.forEach { newsItem ->
-            if (newsItem.title.contains(searchText, true))
-                news.add(newsItem)
-        }
-        return news
-    }
-
-    fun bookmarkNews(news: News): Completable {
-        news.isBookmarked = true
-        return newsDao.saveNewsItem(news)
-    }
-
-    fun removeBookmark(news: News): Completable {
-        news.isBookmarked = false
-        return newsDao.saveNewsItem(news)
-    }
-
-    fun getNewsById(newsId: String): Single<News> {
-        return newsDao.getNewsById(newsId)
-    }
-
-    fun getHotNews(after: String? = null): Single<List<News>> {
-        if (networkManager.isNetworkAvailable() && newsCount > Constants.MAX_NEWS_ENTRIES)
-            deleteNonBookmarkedNews()
-
-        return newsApi.getHotNews(after = after)
-            .flatMap(this::mapApiResponseToNews)
-            .onErrorResumeNext {
-                getSavedNews()
-            }
-    }
-
-    private fun deleteNonBookmarkedNews(): Completable {
+    fun deleteNonBookmarkedNews(): Completable {
         return newsDao.deleteNonBookmarkedNews()
     }
 
@@ -83,25 +56,51 @@ class NewsRepository @Inject constructor(
                 )
             )
         }
-        saveNews(newsList)
-        cacheNews(newsList)
-        updateNewsCount(newsList.size)
+        this.newsList = newsList
         return Single.just(newsList)
     }
 
-    private fun cacheNews(newsList: List<News>) {
-        this.newsList = newsList
+    fun getHotNews(): Single<List<News>> {
+        return newsDao.getAllNews()
     }
 
-    private fun saveNews(newsList: List<News>) {
-        newsDao.saveNews(newsList)
+    fun bookmarkNews(news: News): Completable {
+        news.isBookmarked = true
+        return newsDao.saveNewsItem(news)
+    }
+
+    fun getBookmarkedNews(): Flowable<List<News>> {
+        return newsDao.getBookmarkedNews()
+    }
+
+    fun deleteAllBookmarkedNews(): Completable {
+        return newsDao.deleteAllBookmarkedNews()
+    }
+
+    fun removeBookmark(news: News): Completable {
+        news.isBookmarked = false
+        return newsDao.saveNewsItem(news)
+    }
+
+    fun getNewsById(newsId: String): Single<News> {
+        return newsDao.getNewsById(newsId)
+    }
+
+    fun searchNews(searchText: String): List<News>? {
+        val news = mutableListOf<News>()
+        newsList.forEach { newsItem ->
+            if (newsItem.title.contains(searchText, true))
+                news.add(newsItem)
+        }
+        return news
+    }
+
+    private fun saveNews(newsList: List<News>): Completable {
+        updateNewsCount(newsList.size)
+        return newsDao.saveNews(newsList)
     }
 
     private fun updateNewsCount(count: Int) {
         newsCount += count
-    }
-
-    private fun getSavedNews(): Single<List<News>> {
-        return newsDao.getAllNews()
     }
 }

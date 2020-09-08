@@ -52,7 +52,6 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
                 if (!isNetworkAvailable)
                     showSnackbar(rootLayoutHotNews, R.string.snackbar_no_connection)
             })
-
     }
 
     override fun onNewsClicked(news: News) {
@@ -68,7 +67,7 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
     }
 
     override fun fetchMoreNews(after: String) {
-        hotNewsListViewModel.getHotNews(after)
+        hotNewsListViewModel.fetchMoreNews(after)
     }
 
 }
