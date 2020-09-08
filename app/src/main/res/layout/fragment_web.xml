@@ -38,13 +38,26 @@
                 android:gravity="start"
                 android:onClick="@{()->viewModel.onBackPressed()}"
                 android:padding="12dp" />
+
+            <TextView
+                android:id="@+id/tvMoreOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:drawableEnd="@drawable/ic_more_vertical"
+                android:onClick="@{()-> viewModel.onMoreOptionsClicked()}"
+                android:padding="4dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/tvBlockNewsSource"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -75,38 +88,10 @@
             android:text="@string/loading_error"
             android:textColor="@color/medium_gray"
             android:textSize="22sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvBlockNewsSource"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-        <TextView
-            android:id="@+id/tvBlockNewsSource"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_block"
-            android:drawablePadding="6dp"
-            android:fontFamily="@font/roboto_bold"
-            android:gravity="center"
-            android:padding="16dp"
-            android:text="@string/block_news_source"
-            android:textColor="@color/medium_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tvMoreOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_more_vertical"
-            android:onClick="@{()-> viewModel.onMoreOptionsClicked()}"
-            android:padding="4dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvBlockNewsSource" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
