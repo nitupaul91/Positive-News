@@ -22,15 +22,16 @@ class HotNewsListViewModel @ViewModelInject constructor(
     val isNetworkAvailable = MutableLiveData<Boolean>()
 
     init {
-        newsList.value = mutableListOf()
         fetchHotNewsFromApi()
     }
 
     private fun fetchHotNewsFromApi(after: String? = null) {
         isLoading.value = true
-        disposable.add(newsRepository.deleteNonBookmarkedNews()
-            .andThen(newsRepository.fetchHotNewsFromApi(after))
+        disposable.add(newsRepository.fetchHotNewsFromApi(after)
             .andThen(newsRepository.getHotNews())
+            .doOnError {
+                newsRepository.getHotNews()
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .doAfterTerminate {
                 isLoading.value = false
@@ -38,21 +39,28 @@ class HotNewsListViewModel @ViewModelInject constructor(
             }
             .subscribeOn(Schedulers.io())
             .subscribe({ news ->
+                isNetworkAvailable.value = true
                 newsList.plusAssign(news)
             }, { t ->
+                isNetworkAvailable.value = false
                 t.printStackTrace()
             })
-
         )
     }
 
     fun fetchMoreNews(after: String? = null) {
-        fetchHotNewsFromApi(after)
+        if (networkManager.isNetworkAvailable())
+            fetchHotNewsFromApi(after)
+        else
+            isNetworkAvailable.value = false
     }
 
     fun refreshNews() {
         isRefreshing.value = true
-        newsList.value = emptyList()
+        if (networkManager.isNetworkAvailable())
+            newsList.value = emptyList()
+        else
+            isNetworkAvailable.value = false
         fetchHotNewsFromApi()
     }
 

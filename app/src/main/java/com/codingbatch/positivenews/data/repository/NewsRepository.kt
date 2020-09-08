@@ -4,7 +4,6 @@ import com.codingbatch.positivenews.data.local.NewsDao
 import com.codingbatch.positivenews.data.remote.NewsApi
 import com.codingbatch.positivenews.data.remote.response.NewsOverview
 import com.codingbatch.positivenews.model.News
-import com.codingbatch.positivenews.util.Constants
 import com.codingbatch.positivenews.util.NetworkManager
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -20,22 +19,17 @@ class NewsRepository @Inject constructor(
 ) {
 
     private var newsList: MutableList<News> = mutableListOf()
-    private var newsCount: Int = 0
 
     fun fetchHotNewsFromApi(after: String? = null): Completable {
-        return if (networkManager.isNetworkAvailable() && newsCount > Constants.MAX_NEWS_ENTRIES)
-            deleteNonBookmarkedNews().andThen(
-                newsApi.getHotNews(after = after)
-                    .flatMap(this::mapApiResponseToNews)
-                    .flatMapCompletable(this::saveNews)
-            )
-        else
-            newsApi.getHotNews(after = after)
-                .flatMap(this::mapApiResponseToNews)
-                .flatMapCompletable(this::saveNews)
+        return if (!networkManager.isNetworkAvailable())
+            Completable.complete()
+        else deleteNonBookmarkedNews()
+            .andThen(newsApi.getHotNews(after = after))
+            .flatMap(this::mapApiResponseToNews)
+            .flatMapCompletable(this::saveNews)
     }
 
-    fun deleteNonBookmarkedNews(): Completable {
+    private fun deleteNonBookmarkedNews(): Completable {
         return newsDao.deleteNonBookmarkedNews()
     }
 
@@ -96,11 +90,6 @@ class NewsRepository @Inject constructor(
     }
 
     private fun saveNews(newsList: List<News>): Completable {
-        updateNewsCount(newsList.size)
         return newsDao.saveNews(newsList)
-    }
-
-    private fun updateNewsCount(count: Int) {
-        newsCount += count
     }
 }
