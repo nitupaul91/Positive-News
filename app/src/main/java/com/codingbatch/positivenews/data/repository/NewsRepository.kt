@@ -42,6 +42,7 @@ class NewsRepository @Inject constructor(
         overview.newsData?.children?.forEach { child ->
             newsList.add(
                 News(
+                    child.data.fullName,
                     child.data.title,
                     child.data.url,
                     child.data.thumbnail,
@@ -49,8 +50,7 @@ class NewsRepository @Inject constructor(
                     child.data.ups,
                     child.data.fullName,
                     child.data.domain,
-                    false,
-                    child.data.fullName
+                    child.data.created
                 )
             )
         }
@@ -81,7 +81,7 @@ class NewsRepository @Inject constructor(
         return newsSourceDao.getBlockedNewsSources()
     }
 
-    fun getHotNews(): Flowable<List<News>> {
+    fun getHotNews(): Single<List<News>> {
         return newsDao.getAllNews()
     }
 

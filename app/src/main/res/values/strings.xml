@@ -6,7 +6,7 @@
     <string name="bottom_navigation_tab_hot">HOT</string>
     <string name="bottom_navigation_tab_new">NEW</string>
     <string name="bottom_navigation_tab_saved">SAVED</string>
-    <string name="bottom_navigation_tab_more">MORE</string>
+    <string name="bottom_navigation_tab_settings">SETTINGS</string>
 
     <!--    Content description-->
     <string name="content_description_icon_more">More</string>

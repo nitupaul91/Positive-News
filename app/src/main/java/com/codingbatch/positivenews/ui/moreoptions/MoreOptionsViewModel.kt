@@ -32,7 +32,7 @@ class MoreOptionsViewModel @ViewModelInject constructor(
     }
 
     fun onBookmarkClicked(news: News) {
-        if (news.isBookmarked)
+        if (news.isBookmarked == true)
             removeBookmark(news)
         else
             bookmarkNews(news)

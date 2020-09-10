@@ -13,7 +13,7 @@ import io.reactivex.Single
 interface NewsDao {
 
     @Query("SELECT * FROM news")
-    fun getAllNews(): Flowable<List<News>>
+    fun getAllNews(): Single<List<News>>
 
     @Query("SELECT * FROM news WHERE isBookmarked = 1")
     fun getBookmarkedNews(): Flowable<List<News>>
@@ -21,7 +21,7 @@ interface NewsDao {
     @Query("SELECT * FROM news WHERE id = :id")
     fun getNewsById(id: String): Single<News>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveNews(newsList: List<News>): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -32,4 +32,5 @@ interface NewsDao {
 
     @Query("DELETE FROM news WHERE isBookmarked = 1")
     fun deleteAllBookmarkedNews(): Completable
+
 }
