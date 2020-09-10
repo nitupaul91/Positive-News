@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.data.local.NewsDao
 import com.codingbatch.positivenews.data.local.NewsDb
+import com.codingbatch.positivenews.data.local.NewsSourceDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,14 +24,20 @@ class NewsDbModule {
             NewsDb::class.java,
             application.getString(R.string.news_database_name)
         )
-                //TODO add migrations
+            //TODO add migrations
             .fallbackToDestructiveMigration()
             .build()
     }
 
     @Provides
     @Singleton
-    fun getNewsDao(newsDb: NewsDb) : NewsDao {
+    fun getNewsDao(newsDb: NewsDb): NewsDao {
         return newsDb.newsDao();
+    }
+
+    @Provides
+    @Singleton
+    fun getNewsSourceDao(newsDb: NewsDb): NewsSourceDao {
+        return newsDb.newsSourceDao();
     }
 }

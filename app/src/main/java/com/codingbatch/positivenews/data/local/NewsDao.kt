@@ -13,7 +13,7 @@ import io.reactivex.Single
 interface NewsDao {
 
     @Query("SELECT * FROM news")
-    fun getAllNews(): Single<List<News>>
+    fun getAllNews(): Flowable<List<News>>
 
     @Query("SELECT * FROM news WHERE isBookmarked = 1")
     fun getBookmarkedNews(): Flowable<List<News>>

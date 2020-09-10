@@ -1,9 +1,11 @@
 package com.codingbatch.positivenews.data.repository
 
 import com.codingbatch.positivenews.data.local.NewsDao
+import com.codingbatch.positivenews.data.local.NewsSourceDao
 import com.codingbatch.positivenews.data.remote.NewsApi
 import com.codingbatch.positivenews.data.remote.response.NewsOverview
 import com.codingbatch.positivenews.model.News
+import com.codingbatch.positivenews.model.NewsSource
 import com.codingbatch.positivenews.util.NetworkManager
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -15,7 +17,8 @@ import javax.inject.Singleton
 class NewsRepository @Inject constructor(
     private val newsApi: NewsApi,
     private val newsDao: NewsDao,
-    private val networkManager: NetworkManager
+    private val networkManager: NetworkManager,
+    private val newsSourceDao: NewsSourceDao
 ) {
 
     private var newsList: MutableList<News> = mutableListOf()
@@ -26,6 +29,7 @@ class NewsRepository @Inject constructor(
         else deleteNonBookmarkedNews()
             .andThen(newsApi.getHotNews(after = after))
             .flatMap(this::mapApiResponseToNews)
+            .flatMap(this::filterBlockedNews)
             .flatMapCompletable(this::saveNews)
     }
 
@@ -54,7 +58,30 @@ class NewsRepository @Inject constructor(
         return Single.just(newsList)
     }
 
-    fun getHotNews(): Single<List<News>> {
+    private fun filterBlockedNews(
+        newsList: List<News>
+    ): Single<List<News>> {
+        val hashSet = HashSet<String>()
+        val list = mutableListOf<News>()
+        list.addAll(newsList)
+        return getBlockedSources()
+            .flatMap {
+                it.forEach { newsSource ->
+                    hashSet.add(newsSource.domain)
+                }
+                newsList.forEach { newsItem ->
+                    if (hashSet.contains(newsItem.domain))
+                        list.remove(newsItem)
+                }
+                Single.just(list)
+            }
+    }
+
+    private fun getBlockedSources(): Single<List<NewsSource>> {
+        return newsSourceDao.getBlockedNewsSources()
+    }
+
+    fun getHotNews(): Flowable<List<News>> {
         return newsDao.getAllNews()
     }
 
@@ -92,4 +119,9 @@ class NewsRepository @Inject constructor(
     private fun saveNews(newsList: List<News>): Completable {
         return newsDao.saveNews(newsList)
     }
+
+    fun blockNewsSource(newsSource: NewsSource): Completable {
+        return newsSourceDao.blockNewsSource(newsSource)
+    }
+
 }
