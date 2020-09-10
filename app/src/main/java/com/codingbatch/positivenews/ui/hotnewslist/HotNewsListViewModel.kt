@@ -33,15 +33,15 @@ class HotNewsListViewModel @ViewModelInject constructor(
                 newsRepository.getHotNews()
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .doAfterTerminate {
-                isLoading.value = false
-                isRefreshing.value = false
-            }
             .subscribeOn(Schedulers.io())
             .subscribe({ news ->
+                isLoading.value = false
+                isRefreshing.value = false
                 isNetworkAvailable.value = true
                 newsList.plusAssign(news)
             }, { t ->
+                isLoading.value = false
+                isRefreshing.value = false
                 isNetworkAvailable.value = false
                 t.printStackTrace()
             })
