@@ -10,6 +10,8 @@ import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.base.BaseFragment
 import com.codingbatch.positivenews.ui.moreoptions.MoreOptionsBottomFragment
 import com.codingbatch.positivenews.util.Constants
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_web.*
 
@@ -39,6 +41,17 @@ class WebFragment : BaseFragment() {
         webViewModel.isMoreOptionsClicked.observe(viewLifecycleOwner, Observer {
             MoreOptionsBottomFragment.newInstance(news)
                 .show(childFragmentManager, Constants.MORE_OPTIONS_TAG)
+        })
+
+        webViewModel.snackbarMessageId.observe(viewLifecycleOwner, Observer { snackbarMessageId ->
+            Snackbar.make(rootLayoutWeb, snackbarMessageId, Snackbar.LENGTH_LONG)
+                .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+                        navigateBack()
+                    }
+                })
+                .show()
         })
 
         webViewModel.isBackPressed.observe(viewLifecycleOwner, Observer { isBackPressed ->

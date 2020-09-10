@@ -6,10 +6,8 @@ import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.data.repository.NewsRepository
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.base.BaseViewModel
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 
 
 class MoreOptionsViewModel @ViewModelInject constructor(
@@ -18,7 +16,6 @@ class MoreOptionsViewModel @ViewModelInject constructor(
 
     val isNewsBookmarked = MutableLiveData<Boolean>()
     val isNewsShared = MutableLiveData<Boolean>()
-    val isDialogVisible = MutableLiveData<Boolean>()
     val snackbarMessageId = MutableLiveData<Int>()
 
     fun setBookmarkStatus(newsId: String) {
@@ -46,15 +43,8 @@ class MoreOptionsViewModel @ViewModelInject constructor(
             repository.bookmarkNews(news)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate {
-                    Completable.timer(800, TimeUnit.MILLISECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe {
-                            isDialogVisible.value = false
-                        }
-                }
                 .subscribe({
-                    snackbarMessageId.value = R.string.more_options_snackbar_bookmark_added
+                    snackbarMessageId.value = R.string.snackbar_bookmark_added
                     isNewsBookmarked.value = true
                 }, { t ->
                     t.printStackTrace()
@@ -67,15 +57,8 @@ class MoreOptionsViewModel @ViewModelInject constructor(
             repository.removeBookmark(news)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doAfterTerminate {
-                    Completable.timer(800, TimeUnit.MILLISECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe {
-                            isDialogVisible.value = false
-                        }
-                }
                 .subscribe({
-                    snackbarMessageId.value = R.string.more_options_snackbar_bookmark_removed
+                    snackbarMessageId.value = R.string.snackbar_bookmark_removed
                     isNewsBookmarked.value = false
                 }, { t ->
                     t.printStackTrace()

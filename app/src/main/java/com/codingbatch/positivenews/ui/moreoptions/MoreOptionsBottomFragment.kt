@@ -12,6 +12,7 @@ import com.codingbatch.positivenews.databinding.BottomFragmentMoreOptionsBinding
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.util.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.bottom_fragment_more_options.*
@@ -40,16 +41,17 @@ class MoreOptionsBottomFragment : BottomSheetDialogFragment() {
             if (it)
                 shareNews(news)
         })
-        moreOptionsViewModel.snackbarMessageId.observe(viewLifecycleOwner, Observer { snackbarMessageId ->
-            Snackbar.make(rootLayout, snackbarMessageId, Snackbar.LENGTH_LONG).show()
-        })
-
-        moreOptionsViewModel.isDialogVisible.observe(
+        moreOptionsViewModel.snackbarMessageId.observe(
             viewLifecycleOwner,
-            Observer { isDialogVisible ->
-                if (!isDialogVisible) {
-                    this.dismiss()
-                }
+            Observer { snackbarMessageId ->
+                Snackbar.make(rootLayout, snackbarMessageId, Snackbar.LENGTH_SHORT)
+                    .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                            super.onDismissed(transientBottomBar, event)
+                            this@MoreOptionsBottomFragment.dismiss()
+                        }
+                    })
+                    .show()
             })
     }
 

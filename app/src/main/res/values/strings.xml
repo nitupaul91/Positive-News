@@ -16,11 +16,12 @@
     <string name="more_options_share_button">Share</string>
     <string name="more_options_bookmark_inactive_button">Read later</string>
     <string name="more_options_bookmark_active_button">Delete from saved</string>
-    <string name="more_options_snackbar_bookmark_added">Bookmark added.</string>
-    <string name="more_options_snackbar_bookmark_removed">Bookmark removed.</string>
 
-    <!--    HotNewsListFragment-->
+    <!--    Snackbars-->
     <string name="snackbar_no_connection">No connection is available. Please try again later.</string>
+    <string name="snackbar_bookmark_added">Bookmark added.</string>
+    <string name="snackbar_bookmark_removed">Bookmark removed.</string>
+    <string name="snackbar_news_source_blocked">News source blocked.</string>
 
     <!--    BookmarkListFragment-->
     <string name="remove_all_bookmarks">Remove all bookmarks</string>
