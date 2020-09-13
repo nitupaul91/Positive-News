@@ -39,7 +39,7 @@ class NewsListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindView(newsList!![position], newsClickListener)
-        if (newsList!!.size > 18 && position == newsList!!.size - 1) {
+        if (position == newsList!!.size - 1) {
             newsScrollListener?.fetchMoreNews(newsList!![newsList!!.size - 1].fullName!!)
         }
     }

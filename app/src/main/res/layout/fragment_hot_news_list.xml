@@ -18,7 +18,7 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loadingAnimation"
-            loading="@{viewModel.isLoading()}"
+            loading="@{viewModel.isLoading}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -61,11 +61,24 @@
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/white"
                     android:drawableStart="@drawable/ic_search"
+                    android:inputType="text"
                     android:paddingStart="24dp"
                     android:paddingEnd="24dp"
                     android:singleLine="true"
                     android:text="@={viewModel.searchText}"
                     android:textCursorDrawable="@null" />
+
+                <TextView
+                    android:id="@+id/tvSettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:drawableEnd="@drawable/ic_settings"
+                    android:onClick="@{()->viewModel.onSettingsClicked()}"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:visibility="gone" />
+
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>

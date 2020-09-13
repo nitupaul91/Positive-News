@@ -1,6 +1,7 @@
 package com.codingbatch.positivenews.ui.webview
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -48,7 +49,11 @@ class WebFragment : BaseFragment() {
                 .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                         super.onDismissed(transientBottomBar, event)
-                        navigateBack()
+                        try {
+                            navigateBack()
+                        } catch (exception: IllegalStateException) {
+                            Log.d("Already navigated", exception.localizedMessage)
+                        }
                     }
                 })
                 .show()

@@ -7,13 +7,14 @@ import androidx.room.Query
 import com.codingbatch.positivenews.model.News
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.Single
 
 @Dao
 interface NewsDao {
 
-    @Query("SELECT * FROM news")
-    fun getAllNews(): Single<List<News>>
+    @Query("SELECT * FROM news WHERE isBookmarked = 0")
+    fun getAllNews(): Flowable<List<News>>
 
     @Query("SELECT * FROM news WHERE isBookmarked = 1")
     fun getBookmarkedNews(): Flowable<List<News>>

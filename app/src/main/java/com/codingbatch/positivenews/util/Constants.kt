@@ -3,6 +3,7 @@ package com.codingbatch.positivenews.util
 object Constants {
 
     const val MORE_OPTIONS_TAG = "more_options_bottom_fragment"
+    const val SETTINGS_TAG = "settings_fragment"
 
     const val URL = "https://www.reddit.com/"
     const val NEWS_URL = "news_url"

@@ -20,6 +20,7 @@ class HotNewsListViewModel @ViewModelInject constructor(
     val searchText = MutableLiveData<String>()
     val isRefreshing = MutableLiveData<Boolean>()
     val isNetworkAvailable = MutableLiveData<Boolean>()
+    val isSettingsClicked = MutableLiveData<Boolean>()
 
     init {
         fetchHotNewsFromApi()
@@ -27,24 +28,22 @@ class HotNewsListViewModel @ViewModelInject constructor(
 
     private fun fetchHotNewsFromApi(after: String? = null) {
         isLoading.value = true
-        disposable.add(newsRepository.fetchHotNewsFromApi(after)
-            .andThen(newsRepository.getHotNews())
-            .doOnError {
-                newsRepository.getHotNews()
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({ news ->
-                isLoading.value = false
-                isRefreshing.value = false
-                isNetworkAvailable.value = true
-                newsList.plusAssign(news)
-            }, { t ->
-                isLoading.value = false
-                isRefreshing.value = false
-                isNetworkAvailable.value = false
-                t.printStackTrace()
-            })
+        disposable.add(
+            newsRepository.fetchHotNewsFromApi(after)
+                .andThen(newsRepository.getHotNews())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({ news ->
+                    isLoading.value = false
+                    isRefreshing.value = false
+                    isNetworkAvailable.value = true
+                    newsList.plusAssign(news)
+                }, { t ->
+                    isLoading.value = false
+                    isRefreshing.value = false
+                    isNetworkAvailable.value = false
+                    t.printStackTrace()
+                })
         )
     }
 
@@ -67,6 +66,11 @@ class HotNewsListViewModel @ViewModelInject constructor(
     fun searchNews() {
         val searchText = searchText.value ?: ""
         newsList.value = newsRepository.searchNews(searchText)
+    }
+
+    fun onSettingsClicked() {
+        isSettingsClicked.value = true
+        isSettingsClicked.value = false
     }
 
 }

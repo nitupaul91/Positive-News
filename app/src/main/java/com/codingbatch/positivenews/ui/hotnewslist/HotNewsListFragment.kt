@@ -10,6 +10,7 @@ import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.base.BaseFragment
 import com.codingbatch.positivenews.ui.common.adapter.NewsListAdapter
 import com.codingbatch.positivenews.ui.moreoptions.MoreOptionsBottomFragment
+import com.codingbatch.positivenews.ui.settings.SettingsFragment
 import com.codingbatch.positivenews.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_hot_news_list.*
@@ -41,10 +42,19 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView(rvHotNewsList, newsListAdapter)
 
-        hotNewsListViewModel.searchText.observe(viewLifecycleOwner, Observer { searchText ->
-            if (searchText.isNotEmpty())
-                hotNewsListViewModel.searchNews()
-        })
+        hotNewsListViewModel.searchText.observe(viewLifecycleOwner,
+            Observer { searchText ->
+                if (searchText.isNotEmpty())
+                    hotNewsListViewModel.searchNews()
+            })
+
+        hotNewsListViewModel.isSettingsClicked.observe(
+            viewLifecycleOwner,
+            Observer { isSettingsClicked ->
+                if (isSettingsClicked)
+                    SettingsFragment.newInstance()
+                        .show(childFragmentManager, Constants.SETTINGS_TAG)
+            })
 
         hotNewsListViewModel.isNetworkAvailable.observe(
             viewLifecycleOwner,

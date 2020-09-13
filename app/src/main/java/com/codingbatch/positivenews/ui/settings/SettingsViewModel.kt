@@ -1,7 +1,16 @@
 package com.codingbatch.positivenews.ui.settings
 
-import androidx.lifecycle.ViewModel
+import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
+import com.codingbatch.positivenews.R
+import com.codingbatch.positivenews.ui.base.BaseViewModel
 
-class SettingsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class SettingsViewModel @ViewModelInject constructor() : BaseViewModel() {
+
+    val destinationId = MutableLiveData<Int>()
+
+    fun changeDestinationId(view: View) {
+    }
+
 }

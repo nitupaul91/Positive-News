@@ -10,6 +10,7 @@ import com.codingbatch.positivenews.util.NetworkManager
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
+import rx.subjects.BehaviorSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,6 +23,7 @@ class NewsRepository @Inject constructor(
 ) {
 
     private var newsList: MutableList<News> = mutableListOf()
+    private val blockedNewsSources: BehaviorSubject<List<NewsSource>> = BehaviorSubject.create()
 
     fun fetchHotNewsFromApi(after: String? = null): Completable {
         return if (!networkManager.isNetworkAvailable())
@@ -79,9 +81,13 @@ class NewsRepository @Inject constructor(
 
     private fun getBlockedSources(): Single<List<NewsSource>> {
         return newsSourceDao.getBlockedNewsSources()
+            .flatMap {
+                blockedNewsSources.onNext(it)
+                Single.just(it)
+            }
     }
 
-    fun getHotNews(): Single<List<News>> {
+    fun getHotNews(): Flowable<List<News>> {
         return newsDao.getAllNews()
     }
 
@@ -122,6 +128,25 @@ class NewsRepository @Inject constructor(
 
     fun blockNewsSource(newsSource: NewsSource): Completable {
         return newsSourceDao.blockNewsSource(newsSource)
+            .andThen(getBlockedSources()).flatMapCompletable {
+                blockedNewsSources.onNext(it)
+                Completable.complete()
+            }
+            .andThen {
+                filterBlockedNews(newsList)
+                    .flatMapCompletable { saveNews(it) }
+                Completable.complete()
+            }
     }
+
+    fun unblockNewsSource(domain: String): Completable {
+        return newsSourceDao.unblockNewsSource(domain).andThen(getBlockedSources())
+            .flatMapCompletable {
+                blockedNewsSources.onNext(it)
+                Completable.complete()
+            }
+    }
+
+    fun getBlockedSourcesSubject() = blockedNewsSources
 
 }

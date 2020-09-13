@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
     app:startDestination="@id/hotNewsListFragment">
 
@@ -14,6 +15,9 @@
         <action
             android:id="@+id/action_newsListFragment_to_bookmarkNewsListFragment"
             app:destination="@id/bookmarkedNewsListFragment" />
+        <action
+            android:id="@+id/action_hotNewsListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -31,6 +35,33 @@
         <action
             android:id="@+id/action_bookmarkNewsListFragment_to_newsListFragment"
             app:destination="@id/hotNewsListFragment" />
+        <action
+            android:id="@+id/action_bookmarkedNewsListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.codingbatch.positivenews.ui.settings.SettingsFragment"
+        android:label="SettingsFragment">
+        <action
+            android:id="@+id/action_settingsFragment_to_hotNewsListFragment"
+            app:destination="@id/hotNewsListFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_bookmarkedNewsListFragment"
+            app:destination="@id/bookmarkedNewsListFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_blockedSourcesFragment"
+            app:destination="@id/blockedSourcesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/blockedSourcesFragment"
+        android:name="com.codingbatch.positivenews.ui.blockedsources.BlockedSourcesFragment"
+        tools:layout="BlockedSourcesFragment" >
+        <action
+            android:id="@+id/action_blockedSourcesFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
 </navigation>

@@ -1,18 +1,15 @@
 package com.codingbatch.positivenews.ui
 
-import android.os.Bundle
 import android.view.MenuItem
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.ui.base.BaseViewModel
 import com.codingbatch.positivenews.util.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivityViewModel @ViewModelInject constructor(
-) : BaseViewModel(), BottomNavigationView.OnNavigationItemSelectedListener{
+) : BaseViewModel(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     val destinationId = MutableLiveData<Int>()
 
@@ -24,6 +21,10 @@ class MainActivityViewModel @ViewModelInject constructor(
             }
             R.id.bookmarkedNewsListFragment -> {
                 changeDestinationId(R.id.bookmarkedNewsListFragment)
+                true
+            }
+            R.id.blockedSourcesFragment -> {
+                changeDestinationId(R.id.blockedSourcesFragment)
                 true
             }
             else -> {

@@ -26,8 +26,6 @@ class BookmarkedNewsListViewModel @ViewModelInject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    //todo hide text when there are no bookmarks left
-                    //todo also add placeholder text
                 }, { throwable ->
                     throwable.printStackTrace()
                 })

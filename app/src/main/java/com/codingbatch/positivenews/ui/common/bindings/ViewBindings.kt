@@ -8,6 +8,8 @@ import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.codingbatch.positivenews.R
 import com.codingbatch.positivenews.model.News
+import com.codingbatch.positivenews.model.NewsSource
+import com.codingbatch.positivenews.ui.common.adapter.BlockedSourcesAdapter
 import com.codingbatch.positivenews.ui.common.adapter.NewsListAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -23,6 +25,13 @@ class ViewBindings {
         fun setNewsList(recyclerView: RecyclerView, newsList: MutableList<News>?) {
             val adapter = recyclerView.adapter as NewsListAdapter?
             adapter?.setNews(newsList)
+        }
+
+        @JvmStatic
+        @BindingAdapter("blockedSources")
+        fun setBlockedSources(recyclerView: RecyclerView, blockedSources: MutableList<NewsSource>?) {
+            val adapter = recyclerView.adapter as BlockedSourcesAdapter?
+            adapter?.setBlockedSources(blockedSources)
         }
 
         @JvmStatic
