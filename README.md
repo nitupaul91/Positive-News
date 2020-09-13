@@ -28,3 +28,10 @@ Clean and Simple UI.
 **Will include dark theme in the future.**
 
 **Will also include more tests.**
+
+<img src="https://user-images.githubusercontent.com/49907572/93021623-4233cf00-f5ec-11ea-967e-9f8cd7e05725.png" width="500">
+
+<img src="https://user-images.githubusercontent.com/49907572/93021610-2b8d7800-f5ec-11ea-885f-8a6f442317f7.png" width="500">
+
+<img src="https://user-images.githubusercontent.com/49907572/93021645-65f71500-f5ec-11ea-85ad-477ce64c4a31.png" width="500">
+
