@@ -16,6 +16,24 @@
         android:background="@color/white"
         android:fitsSystemWindows="false">
 
+        <TextView
+            android:layout_marginTop="?attr/actionBarSize"
+            isVisible="@{viewModel.isNetworkUnavailable}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableTop="@drawable/ic_page_not_found"
+            android:fontFamily="@font/roboto_black"
+            android:paddingStart="16dp"
+            android:gravity="center"
+            android:paddingEnd="16dp"
+            android:text="@string/loading_error"
+            android:textColor="@color/medium_gray"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loadingAnimation"
             loading="@{viewModel.isLoading}"
@@ -39,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:listitem="@layout/item_list_news" />
+
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.appbar.AppBarLayout

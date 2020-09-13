@@ -6,7 +6,6 @@ import com.codingbatch.positivenews.data.remote.NewsApi
 import com.codingbatch.positivenews.data.remote.response.NewsOverview
 import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.model.NewsSource
-import com.codingbatch.positivenews.util.NetworkManager
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -18,25 +17,16 @@ import javax.inject.Singleton
 class NewsRepository @Inject constructor(
     private val newsApi: NewsApi,
     private val newsDao: NewsDao,
-    private val networkManager: NetworkManager,
     private val newsSourceDao: NewsSourceDao
 ) {
 
     private var newsList: MutableList<News> = mutableListOf()
     private val blockedNewsSources: BehaviorSubject<List<NewsSource>> = BehaviorSubject.create()
 
-    fun fetchHotNewsFromApi(after: String? = null): Completable {
-        return if (!networkManager.isNetworkAvailable())
-            Completable.complete()
-        else deleteNonBookmarkedNews()
-            .andThen(newsApi.getHotNews(after = after))
+    fun fetchHotNews(after: String? = null): Single<List<News>> {
+        return newsApi.getHotNews(after = after)
             .flatMap(this::mapApiResponseToNews)
             .flatMap(this::filterBlockedNews)
-            .flatMapCompletable(this::saveNews)
-    }
-
-    private fun deleteNonBookmarkedNews(): Completable {
-        return newsDao.deleteNonBookmarkedNews()
     }
 
     private fun mapApiResponseToNews(overview: NewsOverview): Single<List<News>> {
@@ -87,10 +77,6 @@ class NewsRepository @Inject constructor(
             }
     }
 
-    fun getHotNews(): Flowable<List<News>> {
-        return newsDao.getAllNews()
-    }
-
     fun bookmarkNews(news: News): Completable {
         news.isBookmarked = true
         return newsDao.saveNewsItem(news)
@@ -122,19 +108,15 @@ class NewsRepository @Inject constructor(
         return news
     }
 
-    private fun saveNews(newsList: List<News>): Completable {
-        return newsDao.saveNews(newsList)
-    }
-
     fun blockNewsSource(newsSource: NewsSource): Completable {
         return newsSourceDao.blockNewsSource(newsSource)
-            .andThen(getBlockedSources()).flatMapCompletable {
+            .andThen(getBlockedSources())
+            .flatMapCompletable {
                 blockedNewsSources.onNext(it)
                 Completable.complete()
             }
             .andThen {
                 filterBlockedNews(newsList)
-                    .flatMapCompletable { saveNews(it) }
                 Completable.complete()
             }
     }

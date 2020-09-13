@@ -56,10 +56,10 @@ class HotNewsListFragment : BaseFragment(), NewsListAdapter.NewsClickListener,
                         .show(childFragmentManager, Constants.SETTINGS_TAG)
             })
 
-        hotNewsListViewModel.isNetworkAvailable.observe(
+        hotNewsListViewModel.isNetworkUnavailable.observe(
             viewLifecycleOwner,
             Observer { isNetworkAvailable ->
-                if (!isNetworkAvailable)
+                if (isNetworkAvailable)
                     showSnackbar(rootLayoutHotNews, R.string.snackbar_no_connection)
             })
     }

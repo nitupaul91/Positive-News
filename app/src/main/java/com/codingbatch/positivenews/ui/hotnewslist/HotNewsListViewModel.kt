@@ -7,8 +7,6 @@ import com.codingbatch.positivenews.model.News
 import com.codingbatch.positivenews.ui.base.BaseViewModel
 import com.codingbatch.positivenews.util.NetworkManager
 import com.codingbatch.positivenews.util.plusAssign
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class HotNewsListViewModel @ViewModelInject constructor(
     private val newsRepository: NewsRepository,
@@ -19,48 +17,54 @@ class HotNewsListViewModel @ViewModelInject constructor(
     val isLoading = MutableLiveData<Boolean>()
     val searchText = MutableLiveData<String>()
     val isRefreshing = MutableLiveData<Boolean>()
-    val isNetworkAvailable = MutableLiveData<Boolean>()
+    val isNetworkUnavailable = MutableLiveData<Boolean>()
     val isSettingsClicked = MutableLiveData<Boolean>()
 
     init {
-        fetchHotNewsFromApi()
+        fetchHotNews()
     }
 
-    private fun fetchHotNewsFromApi(after: String? = null) {
+    private fun fetchHotNews(after: String? = null) {
         isLoading.value = true
-        disposable.add(
-            newsRepository.fetchHotNewsFromApi(after)
-                .andThen(newsRepository.getHotNews())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({ news ->
-                    isLoading.value = false
-                    isRefreshing.value = false
-                    isNetworkAvailable.value = true
-                    newsList.plusAssign(news)
-                }, { t ->
-                    isLoading.value = false
-                    isRefreshing.value = false
-                    isNetworkAvailable.value = false
-                    t.printStackTrace()
-                })
-        )
+        if (networkManager.isNetworkAvailable()) {
+            disposable.add(
+                newsRepository.fetchHotNews(after)
+                    .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                    .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                    .subscribe({
+                        newsList.plusAssign(it)
+                        isLoading.value = false
+                        isRefreshing.value = false
+                        isNetworkUnavailable.value = false
+                    }, { t ->
+
+                    })
+            )
+        } else {
+            isLoading.value = false
+            isRefreshing.value = false
+            isNetworkUnavailable.value = true
+        }
     }
 
     fun fetchMoreNews(after: String? = null) {
-        if (networkManager.isNetworkAvailable())
-            fetchHotNewsFromApi(after)
-        else
-            isNetworkAvailable.value = false
+        if (networkManager.isNetworkAvailable()) {
+            isNetworkUnavailable.value = false
+            fetchHotNews(after)
+        } else
+            isNetworkUnavailable.value = true
     }
 
     fun refreshNews() {
         isRefreshing.value = true
-        if (networkManager.isNetworkAvailable())
+        if (networkManager.isNetworkAvailable()) {
+            isNetworkUnavailable.value = false
             newsList.value = emptyList()
-        else
-            isNetworkAvailable.value = false
-        fetchHotNewsFromApi()
+            fetchHotNews()
+        } else {
+            isRefreshing.value = false
+            isNetworkUnavailable.value = true
+        }
     }
 
     fun searchNews() {
