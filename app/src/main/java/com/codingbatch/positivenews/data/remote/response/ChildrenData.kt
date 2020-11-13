@@ -22,5 +22,9 @@ class ChildrenData(
     @SerializedName("over_18")
     val NSFW: Boolean,
     @SerializedName("domain")
-    val domain: String
+    val domain: String,
+    @SerializedName("created")
+    val created: Long,
+    @SerializedName("name")
+    val fullName: String
 )

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.codingbatch.positivenews.ui.bookmarkednewslist.BookmarkedNewsListViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tvRemoveAllBookmarks"
+            isVisible="@{viewModel.isRemoveButtonVisible}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_delete_forever_black"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:onClick="@{()->viewModel.deleteAllBookmarks()}"
+            android:text="@string/remove_all_bookmarks"
+            android:textColor="#B2B2B2"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPlaceHolder"
+            isVisible="@{viewModel.isPlaceHolderTextVisible}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableBottom="@drawable/ic_bookmark_border"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/bookmarks_placeholder_text"
+            android:textColor="@color/medium_gray"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/rvBookmarkedNewsList"
+            news="@{viewModel.bookmarkedNewsList}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRemoveAllBookmarks"
+            tools:listitem="@layout/item_list_news" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
